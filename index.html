@@ -19,5 +19,22 @@
         <button class="btn" onclick="window.Telegram.WebApp.showAlert('Система SIGNET активна')">Ввод / Вывод</button>
     </div>
     <script>window.Telegram.WebApp.ready(); window.Telegram.WebApp.expand();</script>
-</body>
+<script>
+    async function updateBalance() {
+        try {
+            // ЗАМЕНИ ССЫЛКУ НИЖЕ НА ТУ, ЧТО ДАЛ NGROK (Forwarding)
+            const response = await fetch('https://indissolubly-semichemical-lashell.ngrok-free.dev/balance');
+            const data = await response.json();
+            
+            // Эта строка находит цифры на экране и меняет их на те, что прислал Мак
+            document.querySelector('.balance-value').innerHTML = data.balance + ' <span class="currency">₽</span>';
+        } catch (e) {
+            console.log("Ошибка связи с сервером. Проверь, запущен ли Python и ngrok.");
+        }
+    }
+
+    // Запускаем проверку баланса каждые 5 секунд
+    updateBalance();
+    setInterval(updateBalance, 5000);
+</script></body>
 </html>
