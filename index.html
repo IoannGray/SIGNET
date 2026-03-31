@@ -80,7 +80,15 @@
                 const data = await response.json();
 
                 document.querySelector('.balance-value').innerText = data.balance + ' ₽';
-
+                onst portfolioEl = document.getElementById('portfolio-list');
+                if (portfolioEl && data.portfolio) {
+                    portfolioEl.innerHTML = data.portfolio.map(item => `
+                        <div class="activity-item">
+                            <span style="color: #c5a059;">${item.asset}</span>
+                            <span>${item.price} <small style="color: ${item.change.includes('+') ? '#4caf50' : '#f44336'};">${item.change}</small></span>
+                        </div>
+                    `).join('');
+                }
                 const historyEl = document.getElementById('history-list');
                 if (data.history) {
                     historyEl.innerHTML = data.history.map(item => `
