@@ -9,7 +9,7 @@
         .card { border: 1px solid #c5a059; padding: 40px; text-align: center; width: 250px; background: #222; }
     
         h1 { font-size: 40px; margin: 10px 0; font-family: serif; }
-        .btn { border: 1px solid #c5a059; color: #c5a059; padding: 10px 20px; margin-top: 20px; text-transform: uppercase; background: none; width: 100%; }
+        .btn { border: 1px solid #c5a059; color: #c5a059; padding: 10px 20px; margin-top: 20px; text-transform: uppercase; background: none; width: 100%;}
     /* Та самая строчка для плавности, которую мы хотели добавить: */
     .balance-value { transition: all 0.5s ease; }
     </style>
@@ -21,7 +21,6 @@
         <h1 class="balance-value">... <span class="currency">₽</span></h1>
         <button class="btn" onclick="window.Telegram.WebApp.showAlert('Система SIGNET активна')">Ввод / Вывод</button>
     </div>
-    <script>window.Telegram.WebApp.ready(); window.Telegram.WebApp.expand();</script>
 <script>
     window.Telegram.WebApp.ready();
     window.Telegram.WebApp.expand();
