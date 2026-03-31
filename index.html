@@ -21,13 +21,24 @@
     <script>window.Telegram.WebApp.ready(); window.Telegram.WebApp.expand();</script>
 <script>
     async function updateBalance() {
-        try {
-            https://indissolubly-semichemical-lashell.ngrok-free.dev/balance
-            const response = await fetch('https://indissolubly-semichemical-lashell.ngrok-free.dev/balance', {
-    headers: {
-        'ngrok-skip-browser-warning': 'true'
-    }
-});
+        async function updateBalance() {
+            try {
+                const response = await fetch('https://indissolubly-semichemical-lashell.ngrok-free.dev/balance', {
+                    headers: {
+                        'ngrok-skip-browser-warning': 'true'
+                    }
+                });
+                const data = await response.json();
+
+                // Ищем заголовок и меняем цифры
+                const balanceElement = document.querySelector('.balance-value');
+                if (balanceElement) {
+                    balanceElement.innerHTML = data.balance + ' <span class="currency">₽</span>';
+                }
+            } catch (e) {
+                console.log('Ждем обновления данных...');
+            }
+        }
             const data = await response.json();
             
             // Эта строка находит цифры на экране и меняет их на те, что прислал Мак
