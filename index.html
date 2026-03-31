@@ -20,36 +20,32 @@
     </div>
     <script>window.Telegram.WebApp.ready(); window.Telegram.WebApp.expand();</script>
 <script>
-    async function updateBalance() {
-        async function updateBalance() {
-            try {
-                const response = await fetch('https://indissolubly-semichemical-lashell.ngrok-free.dev/balance', {
-                    headers: {
-                        'ngrok-skip-browser-warning': 'true'
-                    }
-                });
-                const data = await response.json();
+    window.Telegram.WebApp.ready();
+    window.Telegram.WebApp.expand();
 
-                // Ищем заголовок и меняем цифры
-                const balanceElement = document.querySelector('.balance-value');
-                if (balanceElement) {
-                    balanceElement.innerHTML = data.balance + ' <span class="currency">₽</span>';
+    async function updateBalance() {
+        try {
+            // Добавляем случайный параметр ?t=, чтобы обмануть кэш
+            const response = await fetch('https://indissolubly-semichemical-lashell.ngrok-free.dev/balance?t=' + Date.now(), {
+                headers: {
+                    'ngrok-skip-browser-warning': 'true'
                 }
-            } catch (e) {
-                console.log('Ждем обновления данных...');
-            }
-        }
+            });
             const data = await response.json();
-            
-            // Эта строка находит цифры на экране и меняет их на те, что прислал Мак
-            document.querySelector('.balance-value').innerHTML = data.balance + ' <span class="currency">₽</span>';
+
+            // Ищем именно тот элемент, который мы пометили классом
+            const el = document.querySelector('.balance-value');
+            if (el) {
+                el.innerHTML = data.balance + ' <span class="currency">₽</span>';
+            }
         } catch (e) {
-            console.log("Ошибка связи с сервером. Проверь, запущен ли Python и ngrok.");
+            console.log('Ошибка связи');
         }
     }
 
-    // Запускаем проверку баланса каждые 5 секунд
+    // Запускаем сразу и потом каждые 5 секунд
     updateBalance();
     setInterval(updateBalance, 5000);
-</script></body>
+</script>
+   </body>
 </html>
