@@ -80,6 +80,27 @@
                 const data = await response.json();
 
                 document.querySelector('.balance-value').innerText = data.balance + ' ₽';
+                // Обновление Портфеля
+                const portfolioEl = document.getElementById('portfolio-list');
+                if (portfolioEl && data.portfolio) {
+                    portfolioEl.innerHTML = data.portfolio.map(item => `
+                        <div class="activity-item" style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(197,160,89,0.1); padding: 15px 0; font-size: 11px;">
+                            <span style="color: #c5a059;">${item.asset}</span>
+                            <span>${item.price} <small style="color: ${item.change.includes('+') ? '#4caf50' : '#f44336'}; margin-left: 5px;">${item.change}</small></span>
+                        </div>
+                    `).join('');
+                }
+
+                // Обновление Истории
+                const historyEl = document.getElementById('history-list');
+                if (historyEl && data.history) {
+                    historyEl.innerHTML = data.history.map(item => `
+                        <div class="activity-item" style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(197,160,89,0.1); padding: 15px 0; font-size: 11px;">
+                            <span style="color: #888;">${item.time}</span>
+                            <span>${item.desc}</span>
+                        </div>
+                    `).join('');
+                }
                 onst portfolioEl = document.getElementById('portfolio-list');
                 if (portfolioEl && data.portfolio) {
                     portfolioEl.innerHTML = data.portfolio.map(item => `
