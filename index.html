@@ -89,16 +89,18 @@
                 // 1. Баланс
                 document.getElementById('balance').innerText = data.balance + ' ₽';
 
-                // 2. Портфель
-                const pList = document.getElementById('portfolio-list');
-                if (data.portfolio) {
-                    pList.innerHTML = data.portfolio.map(i => `
-                        <div class="item">
-                            <span>${i.asset}</span>
-                            <span>${i.price} <small style="color:${i.change.includes('+') ? '#4caf50' : '#f44336'}">${i.change}</small></span>
-                        </div>
-                    `).join('');
-                }
+                // 2. Портфель (универсальный код)
+const pList = document.getElementById('portfolio-list');
+if (data.portfolio) {
+    pList.innerHTML = data.portfolio.map(i => `
+        <div class="item">
+            <span>${i.asset}</span>
+            <span style="color:${i.change.includes('+') ? '#4caf50' : '#f44336'}">
+                ${i.price} <small>${i.change}</small>
+            </span>
+        </div>
+    `).join('');
+}
 
                 // 3. История
                 const hList = document.getElementById('history-list');
