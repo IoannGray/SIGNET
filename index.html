@@ -1,138 +1,150 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    </head>
-<body>
-    </body>
-</html>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Signet Wallet</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <title>SIGNET</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400;600&display=swap');
+        body {
+            background-color: #0a0b0d; /* Глубокий антрацит */
+            color: #c5a059; /* Золото Heritage */
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-    :root {
-        --graphite: #1a1a1a; /* Матовый графит */
-        --gold: #c5a059;     /* Приглушенное старое золото */
-        --card-bg: #222222;
-        --text: #e0e0e0;
-    }
+        .header {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            letter-spacing: 6px;
+            margin-top: 50px;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            font-weight: 400;
+        }
 
-    body {
-        background-color: var(--graphite);
-        color: var(--text);
-        font-family: 'Inter', sans-serif;
-        margin: 0;
-        padding: 24px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        min-height: 100vh;
-    }
+        .balance-section {
+            width: 100%;
+            max-width: 350px;
+            text-align: center;
+            margin-bottom: 50px;
+        }
 
-    .header { 
-        margin-top: 30px; 
-        font-family: 'Playfair Display', serif; /* Классический шрифт с засечками */
-        font-size: 22px; 
-        letter-spacing: 5px; 
-        color: var(--gold);
-        text-transform: uppercase;
-        border-bottom: 1px solid var(--gold);
-        padding-bottom: 5px;
-        margin-bottom: 40px;
-    }
+        .label {
+            font-size: 10px;
+            letter-spacing: 3px;
+            color: #666;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
 
-    .card {
-        background: var(--card-bg);
-        width: 100%;
-        max-width: 320px;
-        padding: 40px 10px;
-        text-align: center;
-        border: 1px solid rgba(197, 160, 89, 0.3); /* Золотистая тонкая рамка */
-        box-shadow: 0 15px 35px rgba(0,0,0,0.6);
-        position: relative;
-    }
+        .balance-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 46px;
+            font-weight: 700;
+            color: #fff;
+            margin: 0;
+        }
 
-    /* Декоративные уголки в стиле неоклассики */
-    .card::before {
-        content: "";
-        position: absolute;
-        top: 5px; left: 5px; right: 5px; bottom: 5px;
-        border: 1px solid rgba(197, 160, 89, 0.1);
-        pointer-events: none;
-    }
+        .currency {
+            color: #c5a059;
+            font-size: 28px;
+            margin-left: 5px;
+        }
 
-    .balance-label { 
-        color: #888; 
-        font-size: 11px; 
-        text-transform: uppercase; 
-        letter-spacing: 2px; 
-        margin-bottom: 15px; 
-    }
+        .portfolio-list {
+            width: 100%;
+            max-width: 350px;
+        }
 
-    .balance-value { 
-        font-family: 'Playfair Display', serif;
-        font-size: 44px; 
-        font-weight: 600; 
-        color: var(--gold);
-    }
+        .asset-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 0;
+            border-bottom: 1px solid #1a1c1f;
+        }
 
-    .btn-group { 
-        display: flex; 
-        gap: 15px; 
-        width: 100%; 
-        max-width: 320px;
-        margin-top: 30px;
-    }
+        .asset-name {
+            font-size: 13px;
+            letter-spacing: 1.5px;
+            color: #8a8d91;
+            text-transform: uppercase;
+        }
 
-    .btn {
-        background-color: transparent;
-        color: var(--gold);
-        border: 1px solid var(--gold);
-        padding: 14px;
-        font-size: 14px;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        flex: 1;
-        cursor: pointer;
-        transition: all 0.3s;
-    }
+        .asset-info {
+            text-align: right;
+        }
 
-    .btn:active {
-        background-color: var(--gold);
-        color: var(--graphite);
-    }
-</style>
+        .asset-price {
+            font-size: 15px;
+            color: #fff;
+            display: block;
+        }
+
+        .asset-change {
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .up { color: #2ecc71; }
+        .down { color: #e74c3c; }
+
+    </style>
 </head>
 <body>
-    <div class="header" id="user-name">SIGNET</div>
 
-    <div class="card">
-        <div class="balance-label">Доступный баланс</div>
-        <div class="balance-value" id="balance">0.00 ₽</div>
+    <div class="header">SIGNET</div>
+
+    <div class="balance-section">
+        <div class="label">Total Assets</div>
+        <div id="balance" class="balance-value">Загрузка...</div>
     </div>
 
-    <div class="btn-group">
-        <button class="btn" onclick="tgAction('Пополнение')">Ввод</button>
-        <button class="btn btn-dark" onclick="tgAction('Перевод')">Вывод</button>
-    </div>
+    <div class="label" style="width: 100%; max-width: 350px; text-align: left;">Market Overview</div>
+    <div id="portfolio" class="portfolio-list"></div>
 
     <script>
-        const tg = window.Telegram.WebApp;
-        tg.expand();
-        tg.ready();
-
-        // Отображаем имя пользователя
-        if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-            document.getElementById('user-name').innerText = tg.initDataUnsafe.user.first_name.toUpperCase();
+        async function updateData() {
+            try {
+                // Ссылка из твоего окна ngrok (замени на актуальную, если она поменялась)
+                const url = 'https://indissolubly-semichemical-lashell.ngrok-free.dev/balance';
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                // Обновляем баланс
+                document.getElementById('balance').innerHTML = 
+                    `${data.balance}<span class="currency">₽</span>`;
+                
+                // Обновляем список активов
+                const container = document.getElementById('portfolio');
+                container.innerHTML = '';
+                
+                data.portfolio.forEach(item => {
+                    const isUp = item.change.startsWith('+');
+                    container.innerHTML += `
+                        <div class="asset-row">
+                            <span class="asset-name">${item.asset}</span>
+                            <div class="asset-info">
+                                <span class="asset-price">$${item.price}</span>
+                                <span class="asset-change ${isUp ? 'up' : 'down'}">${item.change}</span>
+                            </div>
+                        </div>
+                    `;
+                });
+            } catch (error) {
+                console.error("Ошибка обновления:", error);
+            }
         }
 
-        function tgAction(type) {
-            tg.HapticFeedback.impactOccurred('medium'); // Вибрация при нажатии
-            tg.showAlert(`Функция "${type}" будет настроена на этапе подключения базы данных.`);
-        }
+        // Запуск при загрузке
+        updateData();
+        // Обновление каждые 5 секунд
+        setInterval(updateData, 5000);
     </script>
 </body>
 </html>
