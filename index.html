@@ -3,58 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SIGNET Terminal</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+    <title>SIGNET</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #c5a059; --dark-bg: #0a0a0a; }
-        body { background-color: var(--dark-bg); color: #fff; font-family: 'Montserrat', sans-serif; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        :root { --gold: #c5a059; --bg: #070707; }
+        body { background-color: var(--bg); color: #fff; font-family: 'Montserrat', sans-serif; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
         
-        .logo { font-family: 'Playfair Display', serif; font-size: 24px; letter-spacing: 10px; color: var(--gold); margin: 30px 0 40px; text-transform: uppercase; font-weight: 300; }
+        .logo { font-family: 'Playfair Display', serif; font-size: 26px; letter-spacing: 12px; color: var(--gold); margin-top: 40px; margin-bottom: 50px; font-weight: 400; text-transform: uppercase; }
 
-        /* Контейнер с золотой рамкой как на скрине */
-        .balance-card {
+        /* Та самая золотая карточка */
+        .balance-frame {
             width: 100%;
             max-width: 350px;
-            background: #111111;
-            border: 1px solid rgba(197, 160, 89, 0.25);
-            padding: 50px 20px;
+            border: 1px solid rgba(197, 160, 89, 0.35);
+            background: linear-gradient(180deg, #111 0%, #0a0a0a 100%);
+            padding: 45px 20px;
             text-align: center;
             box-sizing: border-box;
-            margin-bottom: 50px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            margin-bottom: 55px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
         }
 
-        .label { font-size: 10px; letter-spacing: 4px; color: #555; text-transform: uppercase; margin-bottom: 25px; }
+        .label { font-size: 10px; letter-spacing: 5px; color: #555; text-transform: uppercase; margin-bottom: 25px; font-weight: 300; }
         
-        .balance-value { font-family: 'Playfair Display', serif; font-size: 44px; color: var(--gold); margin-bottom: 40px; }
-        .currency { font-size: 28px; margin-left: 10px; font-weight: 400; }
+        .balance-val { font-family: 'Playfair Display', serif; font-size: 46px; color: var(--gold); margin-bottom: 40px; font-weight: 500; }
+        .currency { font-size: 28px; margin-left: 8px; font-family: 'Montserrat', sans-serif; font-weight: 300; }
 
-        .btn {
+        .btn-action {
             display: inline-block;
             border: 1px solid var(--gold);
-            padding: 14px 45px;
+            padding: 15px 50px;
             color: var(--gold);
             text-decoration: none;
-            font-size: 10px;
-            letter-spacing: 5px;
+            font-size: 11px;
+            letter-spacing: 6px;
             text-transform: uppercase;
+            transition: 0.3s;
         }
 
-        /* Список портфолио */
-        .section-container { width: 100%; max-width: 350px; margin-bottom: 40px; }
-        .section-header { font-size: 10px; letter-spacing: 3px; color: #444; text-transform: uppercase; margin-bottom: 20px; }
+        /* Портфолио */
+        .section-box { width: 100%; max-width: 350px; margin-bottom: 45px; }
+        .section-title { font-size: 10px; letter-spacing: 4px; color: #444; text-transform: uppercase; margin-bottom: 25px; border-bottom: 1px solid #1a1a1a; padding-bottom: 12px; }
         
-        .item-row { display: flex; justify-content: space-between; align-items: flex-end; padding: 18px 0; border-bottom: 1px solid rgba(255,255,255,0.03); }
-        .item-name { font-size: 11px; letter-spacing: 1.5px; color: var(--gold); }
-        .item-data { text-align: right; }
-        .item-price { font-size: 14px; color: #aaa; margin-bottom: 2px; }
-        .item-change { font-size: 9px; font-weight: 600; }
+        .row-item { display: flex; justify-content: space-between; align-items: flex-end; padding: 20px 0; border-bottom: 1px solid #141414; }
+        .name { font-size: 12px; letter-spacing: 2px; color: var(--gold); font-weight: 300; }
+        .data { text-align: right; }
+        .price { font-size: 14px; color: #fff; margin-bottom: 4px; font-weight: 400; }
+        .change { font-size: 10px; font-weight: 600; }
 
         /* Активность */
-        .activity-row { display: flex; font-size: 11px; padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.03); }
-        .act-time { color: #333; width: 60px; }
-        .act-desc { flex: 1; text-align: right; color: var(--gold); }
-        .act-desc b { color: #fff; font-weight: 400; }
+        .activity-row { display: flex; font-size: 11px; padding: 18px 0; border-bottom: 1px solid #141414; }
+        .time { color: #333; width: 65px; font-weight: 300; }
+        .desc { flex: 1; text-align: right; color: var(--gold); font-weight: 300; }
+        .desc b { color: #fff; font-weight: 400; }
 
         .up { color: #2ecc71; } .down { color: #e74c3c; }
     </style>
@@ -63,35 +64,36 @@
 
     <div class="logo">SIGNET</div>
 
-    <div class="balance-card">
+    <div class="balance-frame">
         <div class="label">Current Balance</div>
-        <div id="balance" class="balance-value">...</div>
-        <a href="#" class="btn">Ввод / Вывод</a>
+        <div id="balance" class="balance-val">...</div>
+        <a href="#" class="btn-action">Ввод / Вывод</a>
     </div>
 
-    <div class="section-container">
-        <div class="section-header">Portfolio</div>
+    <div class="section-box">
+        <div class="section-title">Portfolio</div>
         <div id="portfolio"></div>
     </div>
 
-    <div class="section-container">
-        <div class="section-header">Latest Activity</div>
+    <div class="section-box">
+        <div class="section-title">Latest Activity</div>
         <div class="activity-row">
-            <span class="act-time">21:40</span>
-            <span class="act-desc">Профит по <b>BRENT +1.2%</b></span>
+            <span class="time">21:40</span>
+            <span class="desc">Профит по <b>BRENT +1.2%</b></span>
         </div>
         <div class="activity-row">
-            <span class="act-time">18:15</span>
-            <span class="act-desc">SMC: <b>Слом структуры DXY</b></span>
+            <span class="time">18:15</span>
+            <span class="desc">SMC: <b>Слом структуры DXY</b></span>
         </div>
     </div>
 
     <script>
-        async function load() {
-            // Твоя ссылка: https://indissolubly-semichemical-lashell.ngrok-free.dev
+        async function sync() {
             const url = 'https://indissolubly-semichemical-lashell.ngrok-free.dev'; 
             try {
-                const r = await fetch(url + '/balance', { headers: { 'ngrok-skip-browser-warning': 'true' } });
+                const r = await fetch(url + '/balance', { 
+                    headers: { 'ngrok-skip-browser-warning': 'true' } 
+                });
                 const d = await r.json();
                 
                 document.getElementById('balance').innerHTML = `${d.balance} <span class="currency">₽</span>`;
@@ -99,18 +101,19 @@
                 let h = '';
                 d.portfolio.forEach(i => {
                     const c = i.change.startsWith('+') ? 'up' : 'down';
-                    h += `<div class="item-row">
-                            <span class="item-name">${i.asset}</span>
-                            <div class="item-data">
-                                <div class="item-price">${i.price}</div>
-                                <div class="item-change ${c}">${i.change}</div>
+                    h += `<div class="row-item">
+                            <span class="name">${i.asset}</span>
+                            <div class="data">
+                                <div class="price">$${i.price}</div>
+                                <div class="change ${c}">${i.change}</div>
                             </div>
                           </div>`;
                 });
                 document.getElementById('portfolio').innerHTML = h;
-            } catch (e) { console.log(e); }
+            } catch (e) { console.log("Reconnecting..."); }
         }
-        load(); setInterval(load, 5000);
+        sync();
+        setInterval(sync, 5000);
     </script>
 </body>
 </html>
