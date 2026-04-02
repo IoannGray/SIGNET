@@ -3,104 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Traders Club Pocket</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    <title>Traders Club Wallet</title>
     <style>
         body {
-            background-color: #000c18; /* Глубокий полночный синий */
-            color: #e0d0b0; /* Цвет состаренного шелка */
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            margin: 0;
-            padding: 20px;
+            background-color: #1c1c1e;
+            color: white;
             display: flex;
             flex-direction: column;
             align-items: center;
+            padding: 20px;
         }
-
-        .container {
+        .balance {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 40px 0;
+        }
+        .portfolio {
             width: 100%;
             max-width: 400px;
-            border: 1px solid #d4af3733; /* Едва заметная золотая нить */
-            border-radius: 16px;
-            padding: 25px;
-            background: linear-gradient(145deg, #001a33, #000c18);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
         }
-
-        .header {
-            font-family: 'Cinzel', serif;
-            text-align: center;
-            color: #d4af37;
-            font-size: 12px;
-            letter-spacing: 4px;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            opacity: 0.8;
-        }
-
-        /* ТВОЙ ЛЮБИМЫЙ ШРИФТ ЦИФР (Системный, четкий) */
-        .balance {
-            text-align: center;
-            font-size: 44px;
-            font-weight: 700;
-            margin-bottom: 35px;
-            color: #ffffff;
-            letter-spacing: -1px;
-        }
-
         .portfolio-item {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding: 18px 0;
-            border-bottom: 1px solid #d4af3711;
+            padding: 15px;
+            background: #2c2c2e;
+            margin-bottom: 10px;
+            border-radius: 12px;
         }
-
-        .asset-name {
-            font-family: 'Cinzel', serif;
-            font-size: 15px;
-            font-weight: 600;
-            color: #d4af37;
-        }
-
-        .asset-data {
-            text-align: right;
-        }
-
-        .price {
-            font-size: 18px;
-            font-weight: 600;
-            color: #ffffff;
-            margin-bottom: 2px;
-        }
-
-        .change {
-            font-size: 13px;
-            font-weight: 500;
-        }
-
-        .up { color: #4caf50; } /* Сдержанный зеленый */
-        .down { color: #cf6679; } /* Приглушенный красный */
-
-        /* Эффект свечения для золотых элементов */
-        .gold-glow {
-            text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
-        }
+        .asset-name { font-weight: bold; }
+        .up { color: #34c759; }
+        .down { color: #ff3b30; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header gold-glow">Traders Club Est. 2026</div>
-        <div id="balance" class="balance">Загрузка...</div>
-        <div id="portfolio"></div>
-    </div>
+    <h1>Traders Club</h1>
+    <div id="balance" class="balance">Загрузка...</div>
+    <div id="portfolio" class="portfolio"></div>
 
     <script>
         async function fetchData() {
             try {
-                // Твоя ссылка ngrok (проверь, чтобы она была верной)
-                const url = 'https://indissolubly-semichemical-lashell.ngrok-free.dev/balance';
-                const response = await fetch(url);
+                const response = await fetch('https://indissolubly-semichemical-lashell.ngrok-free.dev/balance');
                 const data = await response.json();
                 
                 document.getElementById('balance').innerText = `$${data.balance}`;
@@ -112,17 +56,13 @@
                     const changeClass = item.change.startsWith('+') ? 'up' : 'down';
                     portfolioContainer.innerHTML += `
                         <div class="portfolio-item">
-                            <div class="asset-name">${item.asset}</div>
-                            <div class="asset-data">
-                                <div class="price">$${item.price}</div>
-                                <div class="change ${changeClass}">${item.change}</div>
-                            </div>
+                            <span class="asset-name">${item.asset}</span>
+                            <span>$${item.price} <span class="${changeClass}">(${item.change})</span></span>
                         </div>
                     `;
                 });
             } catch (error) {
-                console.error('Ошибка связи с сервером:', error);
-                document.getElementById('balance').innerText = "Ошибка сети";
+                console.error('Ошибка:', error);
             }
         }
         fetchData();
