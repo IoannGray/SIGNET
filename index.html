@@ -33,7 +33,7 @@
         async function updateData() {
             try {
                 // ВСТАВЬ СЮДА ССЫЛКУ ИЗ ТЕРМИНАЛА (NGROK)
-                const url = 'ВСТАВЬ_ССЫЛКУ_ИЗ_NGROK_ЗДЕСЬ/balance';
+                const url = 'https://indissolubly-semichemical-lashell.ngrok-free.dev';
                 const response = await fetch(url);
                 const data = await response.json();
                 document.getElementById('balance').innerHTML = `${data.balance}<span class="currency">₽</span>`;
