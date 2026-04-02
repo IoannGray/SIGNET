@@ -7,11 +7,29 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root { --gold: #c5a059; --bg: #070707; }
-        body { background-color: var(--bg); color: #fff; font-family: 'Montserrat', sans-serif; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        body { 
+            background-color: var(--bg); 
+            color: #fff; 
+            font-family: 'Montserrat', sans-serif; 
+            margin: 0; 
+            padding: 20px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            min-height: 100vh; 
+        }
         
-        .logo { font-family: 'Playfair Display', serif; font-size: 26px; letter-spacing: 12px; color: var(--gold); margin-top: 40px; margin-bottom: 50px; font-weight: 400; text-transform: uppercase; }
+        .logo { 
+            font-family: 'Playfair Display', serif; 
+            font-size: 26px; 
+            letter-spacing: 12px; 
+            color: var(--gold); 
+            margin-top: 40px; 
+            margin-bottom: 50px; 
+            font-weight: 400; 
+            text-transform: uppercase; 
+        }
 
-        /* Та самая золотая карточка */
         .balance-frame {
             width: 100%;
             max-width: 350px;
@@ -24,10 +42,29 @@
             box-shadow: 0 30px 60px rgba(0,0,0,0.8);
         }
 
-        .label { font-size: 10px; letter-spacing: 5px; color: #555; text-transform: uppercase; margin-bottom: 25px; font-weight: 300; }
+        .label { 
+            font-size: 10px; 
+            letter-spacing: 5px; 
+            color: #555; 
+            text-transform: uppercase; 
+            margin-bottom: 25px; 
+            font-weight: 300; 
+        }
         
-        .balance-val { font-family: 'Playfair Display', serif; font-size: 46px; color: var(--gold); margin-bottom: 40px; font-weight: 500; }
-        .currency { font-size: 28px; margin-left: 8px; font-family: 'Montserrat', sans-serif; font-weight: 300; }
+        .balance-val { 
+            font-family: 'Playfair Display', serif; 
+            font-size: 46px; 
+            color: var(--gold); 
+            margin-bottom: 40px; 
+            font-weight: 500; 
+        }
+        
+        .currency { 
+            font-size: 28px; 
+            margin-left: 8px; 
+            font-family: 'Montserrat', sans-serif; 
+            font-weight: 300; 
+        }
 
         .btn-action {
             display: inline-block;
@@ -41,23 +78,42 @@
             transition: 0.3s;
         }
 
-        /* Портфолио */
         .section-box { width: 100%; max-width: 350px; margin-bottom: 45px; }
-        .section-title { font-size: 10px; letter-spacing: 4px; color: #444; text-transform: uppercase; margin-bottom: 25px; border-bottom: 1px solid #1a1a1a; padding-bottom: 12px; }
         
-        .row-item { display: flex; justify-content: space-between; align-items: flex-end; padding: 20px 0; border-bottom: 1px solid #141414; }
-        .name { font-size: 12px; letter-spacing: 2px; color: var(--gold); font-weight: 300; }
-        .data { text-align: right; }
-        .price { font-size: 14px; color: #fff; margin-bottom: 4px; font-weight: 400; }
-        .change { font-size: 10px; font-weight: 600; }
-
-        /* Активность */
+        .section-title { 
+            font-size: 10px; 
+            letter-spacing: 4px; 
+            color: #444; 
+            text-transform: uppercase; 
+            margin-bottom: 25px; 
+            border-bottom: 1px solid #1a1a1a; 
+            padding-bottom: 12px; 
+        }
+        
+        .row-item { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: flex-end; 
+            padding: 20px 0; 
+            border-bottom: 1px solid #141414; 
+        }
+        
+        .name { 
+            font-size: 12px; 
+            letter-spacing: 2px; 
+            color: var(--gold); 
+            font-weight: 300; 
+        }
+        
+        .price { font-size: 14px; color: #fff; margin-bottom: 4px; }
+        
         .activity-row { display: flex; font-size: 11px; padding: 18px 0; border-bottom: 1px solid #141414; }
-        .time { color: #333; width: 65px; font-weight: 300; }
-        .desc { flex: 1; text-align: right; color: var(--gold); font-weight: 300; }
+        .time { color: #333; width: 65px; }
+        .desc { flex: 1; text-align: right; color: var(--gold); }
         .desc b { color: #fff; font-weight: 400; }
 
-        .up { color: #2ecc71; } .down { color: #e74c3c; }
+        .up { color: #2ecc71; } 
+        .down { color: #e74c3c; }
     </style>
 </head>
 <body>
@@ -89,6 +145,7 @@
 
     <script>
         async function sync() {
+            // Используем твою рабочую ссылку из ngrok
             const url = 'https://indissolubly-semichemical-lashell.ngrok-free.dev'; 
             try {
                 const r = await fetch(url + '/balance', { 
@@ -103,14 +160,14 @@
                     const c = i.change.startsWith('+') ? 'up' : 'down';
                     h += `<div class="row-item">
                             <span class="name">${i.asset}</span>
-                            <div class="data">
+                            <div style="text-align: right;">
                                 <div class="price">$${i.price}</div>
-                                <div class="change ${c}">${i.change}</div>
+                                <div class="change ${c}" style="font-size:10px;">${i.change}</div>
                             </div>
                           </div>`;
                 });
                 document.getElementById('portfolio').innerHTML = h;
-            } catch (e) { console.log("Reconnecting..."); }
+            } catch (e) { console.log("Connection lost..."); }
         }
         sync();
         setInterval(sync, 5000);
