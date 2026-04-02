@@ -1,38 +1,64 @@
-HTML
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SIGNET Heritage</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <title>SIGNET</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@200;300;400&family=Montserrat:wght@100;200;300;400&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #c5a059; --bg: #0d0d0d; }
-        body { background-color: var(--bg); color: #fff; font-family: 'Montserrat', sans-serif; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        :root { --gold: #c5a059; --bg: #070707; }
+        body { 
+            background-color: var(--bg); 
+            color: #fff; 
+            font-family: 'Montserrat', sans-serif; 
+            margin: 0; 
+            padding: 20px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased; /* Делает шрифт еще тоньше на iPhone */
+        }
         
-        .logo { font-family: 'Playfair Display', serif; font-size: 26px; letter-spacing: 12px; color: var(--gold); margin: 40px 0 30px; text-transform: uppercase; font-weight: 400; }
-
-        /* Золотая карточка баланса */
-        .balance-frame {
-            width: 90%;
-            max-width: 360px;
-            border: 1px solid rgba(197, 160, 89, 0.35);
-            background: linear-gradient(180deg, #121212, #0a0a0a);
-            padding: 45px 20px;
-            text-align: center;
-            box-sizing: border-box;
-            margin-bottom: 40px;
+        .logo { 
+            font-family: 'Playfair Display', serif; 
+            font-size: 26px; 
+            letter-spacing: 14px; 
+            color: var(--gold); 
+            margin: 40px 0 50px; 
+            text-transform: uppercase; 
+            font-weight: 300; 
         }
 
-        .label { font-size: 10px; letter-spacing: 5px; color: #666; text-transform: uppercase; margin-bottom: 25px; font-weight: 300; }
+        /* Золотая рамка как на скрине */
+        .balance-frame {
+            width: 100%;
+            max-width: 350px;
+            border: 1px solid rgba(197, 160, 89, 0.2);
+            background: linear-gradient(180deg, #0f0f0f 0%, #070707 100%);
+            padding: 55px 20px;
+            text-align: center;
+            box-sizing: border-box;
+            margin-bottom: 55px;
+        }
+
+        .label { 
+            font-size: 9px; 
+            letter-spacing: 5px; 
+            color: #444; 
+            text-transform: uppercase; 
+            margin-bottom: 30px; 
+            font-weight: 200; 
+        }
         
-        /* Баланс: ТОНКИЙ шрифт с засечками */
+        /* Баланс: Сверхтонкий Playfair Display */
         .balance-val { 
             font-family: 'Playfair Display', serif; 
-            font-size: 46px; 
+            font-size: 48px; 
             color: var(--gold); 
-            margin-bottom: 40px; 
-            font-weight: 300; /* Очень тонкий */
+            margin-bottom: 45px; 
+            font-weight: 200; /* ИСПРАВЛЕНО: Максимально тонкий */
+            letter-spacing: -1px;
         }
         
         /* Рубль: Тонкий и Золотой */
@@ -40,39 +66,62 @@ HTML
             color: var(--gold); 
             font-size: 32px; 
             margin-left: 10px; 
-            font-weight: 200; /* Сверхтонкий */
+            font-weight: 100; /* ИСПРАВЛЕНО: Сверхтонкий */
         }
 
         .btn-action {
             display: inline-block;
             border: 1px solid var(--gold);
-            padding: 15px 50px;
+            padding: 15px 45px;
             color: var(--gold);
             text-decoration: none;
-            font-size: 11px;
-            letter-spacing: 6px;
+            font-size: 10px;
+            letter-spacing: 7px;
             text-transform: uppercase;
+            font-weight: 200;
         }
 
-        /* Портфолио: Утонченный стиль */
-        .section-box { width: 90%; max-width: 360px; margin-bottom: 30px; }
-        .section-title { font-size: 10px; letter-spacing: 3px; color: #666; text-transform: uppercase; margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 10px; }
+        .section-box { width: 100%; max-width: 350px; margin-bottom: 45px; }
+        .section-title { 
+            font-size: 9px; 
+            letter-spacing: 4px; 
+            color: #333; 
+            text-transform: uppercase; 
+            margin-bottom: 25px; 
+            border-bottom: 1px solid #111; 
+            padding-bottom: 12px; 
+        }
         
-        .row-item { display: flex; justify-content: space-between; align-items: flex-end; padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .name { font-size: 12px; letter-spacing: 2px; color: var(--gold); font-weight: 300; }
-        .data { text-align: right; }
+        .row-item { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 20px 0; 
+            border-bottom: 1px solid #0f0f0f; 
+        }
         
-        /* Цены: Утонченные и Тонкие */
-        .price { font-size: 14px; color: #fff; margin-bottom: 4px; font-weight: 400; font-family: 'Montserrat', sans-serif;}
-        .change { font-size: 10px; font-weight: 600; }
+        .name { 
+            font-size: 11px; 
+            letter-spacing: 2px; 
+            color: var(--gold); 
+            font-weight: 300; 
+        }
+        
+        /* Цены: Серые и тонкие */
+        .price-text { 
+            font-size: 14px; 
+            color: #777; /* ИСПРАВЛЕНО: Цвет как на скрине */
+            font-weight: 200; 
+        }
+        
+        .change { font-size: 10px; margin-left: 8px; font-weight: 500; }
+        .up { color: #2ecc71; } .down { color: #e74c3c; }
 
         /* Активность */
-        .activity-row { display: flex; font-size: 11px; padding: 18px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .time { color: #333; width: 65px; font-weight: 300; }
-        .desc { flex: 1; text-align: right; color: var(--gold); font-weight: 300; }
-        .desc b { color: #fff; font-weight: 400; }
-
-        .up { color: #2ecc71; } .down { color: #e74c3c; }
+        .activity-row { display: flex; font-size: 11px; padding: 18px 0; border-bottom: 1px solid #0f0f0f; }
+        .time { color: #222; width: 65px; }
+        .desc { flex: 1; text-align: right; color: var(--gold); font-weight: 200; }
+        .desc b { color: #fff; font-weight: 300; }
     </style>
 </head>
 <body>
@@ -104,29 +153,28 @@ HTML
 
     <script>
         async function sync() {
-            // ТВОЯ АКТУАЛЬНАЯ ССЫЛКА NGROK
             const url = 'https://indissolubly-semichemical-lashell.ngrok-free.dev'; 
             try {
-                const r = await fetch(url + '/balance', { headers: { 'ngrok-skip-browser-warning': 'true' } });
+                const r = await fetch(url + '/balance', { 
+                    headers: { 'ngrok-skip-browser-warning': 'true' } 
+                });
                 const d = await r.json();
                 
-                // Исправляем баланс: Тонкий Playfair и Золотой ₽
+                // Золотой рубль и тонкие цифры
                 document.getElementById('balance').innerHTML = `${d.balance} <span class="currency">₽</span>`;
                 
                 let h = '';
                 d.portfolio.forEach(i => {
                     const c = i.change.startsWith('+') ? 'up' : 'down';
-                    // Исправляем портфолио: Тонкие цены (Montserrat 400)
                     h += `<div class="row-item">
                             <span class="name">${i.asset}</span>
-                            <div class="data">
-                                <div class="price">$${i.price}</div>
-                                <div class="change ${c}">${i.change}</div>
+                            <div class="price-text">
+                                ${i.price} <span class="change ${c}">${i.change}</span>
                             </div>
                           </div>`;
                 });
                 document.getElementById('portfolio').innerHTML = h;
-            } catch (e) { console.log("Connection lost..."); }
+            } catch (e) { console.log("Reloading..."); }
         }
         sync();
         setInterval(sync, 5000);
