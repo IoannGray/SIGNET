@@ -6,144 +6,53 @@
     <title>SIGNET</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        body {
-            background-color: #0a0b0d; /* Глубокий антрацит */
-            color: #c5a059; /* Золото Heritage */
-            font-family: 'Montserrat', sans-serif;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .header {
-            font-family: 'Playfair Display', serif;
-            font-size: 22px;
-            letter-spacing: 6px;
-            margin-top: 50px;
-            margin-bottom: 40px;
-            text-transform: uppercase;
-            font-weight: 400;
-        }
-
-        .balance-section {
-            width: 100%;
-            max-width: 350px;
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        .label {
-            font-size: 10px;
-            letter-spacing: 3px;
-            color: #666;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-        }
-
-        .balance-value {
-            font-family: 'Playfair Display', serif;
-            font-size: 46px;
-            font-weight: 700;
-            color: #fff;
-            margin: 0;
-        }
-
-        .currency {
-            color: #c5a059;
-            font-size: 28px;
-            margin-left: 5px;
-        }
-
-        .portfolio-list {
-            width: 100%;
-            max-width: 350px;
-        }
-
-        .asset-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 18px 0;
-            border-bottom: 1px solid #1a1c1f;
-        }
-
-        .asset-name {
-            font-size: 13px;
-            letter-spacing: 1.5px;
-            color: #8a8d91;
-            text-transform: uppercase;
-        }
-
-        .asset-info {
-            text-align: right;
-        }
-
-        .asset-price {
-            font-size: 15px;
-            color: #fff;
-            display: block;
-        }
-
-        .asset-change {
-            font-size: 11px;
-            font-weight: 600;
-        }
-
-        .up { color: #2ecc71; }
-        .down { color: #e74c3c; }
-
+        body { background-color: #0a0b0d; color: #c5a059; font-family: 'Montserrat', sans-serif; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        .header { font-family: 'Playfair Display', serif; font-size: 22px; letter-spacing: 6px; margin-top: 50px; margin-bottom: 40px; text-transform: uppercase; }
+        .balance-section { width: 100%; max-width: 350px; text-align: center; margin-bottom: 50px; }
+        .label { font-size: 10px; letter-spacing: 3px; color: #666; text-transform: uppercase; margin-bottom: 10px; }
+        .balance-value { font-family: 'Playfair Display', serif; font-size: 46px; font-weight: 700; color: #fff; margin: 0; }
+        .currency { color: #c5a059; font-size: 28px; margin-left: 5px; }
+        .portfolio-list { width: 100%; max-width: 350px; }
+        .asset-row { display: flex; justify-content: space-between; align-items: center; padding: 18px 0; border-bottom: 1px solid #1a1c1f; }
+        .asset-name { font-size: 13px; letter-spacing: 1.5px; color: #8a8d91; text-transform: uppercase; }
+        .asset-price { font-size: 15px; color: #fff; display: block; }
+        .up { color: #2ecc71; font-size: 11px; }
+        .down { color: #e74c3c; font-size: 11px; }
     </style>
 </head>
 <body>
-
     <div class="header">SIGNET</div>
-
     <div class="balance-section">
         <div class="label">Total Assets</div>
         <div id="balance" class="balance-value">Загрузка...</div>
     </div>
-
     <div class="label" style="width: 100%; max-width: 350px; text-align: left;">Market Overview</div>
     <div id="portfolio" class="portfolio-list"></div>
 
     <script>
         async function updateData() {
             try {
-                //https://indissolubly-semichemical-lashell.ngrok-free.dev -> http://localhost:8000
-                const url = 'https://indissolubly-semichemical-lashell.ngrok-free.dev/balance';
+                // ВСТАВЬ СЮДА ССЫЛКУ ИЗ ТЕРМИНАЛА (NGROK)
+                const url = 'ВСТАВЬ_ССЫЛКУ_ИЗ_NGROK_ЗДЕСЬ/balance';
                 const response = await fetch(url);
                 const data = await response.json();
-                 
-                // Обновляем баланс
-                document.getElementById('balance').innerHTML = 
-                    `${data.balance}<span class="currency">₽</span>`;
-                
-                // Обновляем список активов
+                document.getElementById('balance').innerHTML = `${data.balance}<span class="currency">₽</span>`;
                 const container = document.getElementById('portfolio');
                 container.innerHTML = '';
-                
                 data.portfolio.forEach(item => {
                     const isUp = item.change.startsWith('+');
                     container.innerHTML += `
                         <div class="asset-row">
                             <span class="asset-name">${item.asset}</span>
-                            <div class="asset-info">
+                            <div style="text-align:right">
                                 <span class="asset-price">$${item.price}</span>
-                                <span class="asset-change ${isUp ? 'up' : 'down'}">${item.change}</span>
+                                <span class="${isUp ? 'up' : 'down'}">${item.change}</span>
                             </div>
-                        </div>
-                    `;
+                        </div>`;
                 });
-            } catch (error) {
-                console.error("Ошибка обновления:", error);
-            }
+            } catch (error) { document.getElementById('balance').innerText = "Ошибка коннекта"; }
         }
-
-        // Запуск при загрузке
         updateData();
-        // Обновление каждые 5 секунд
         setInterval(updateData, 5000);
     </script>
 </body>
