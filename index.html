@@ -1,23 +1,11 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signet</title>
     <style>
-        body { 
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
-            text-align: center; 
-            padding: 50px; 
-            background-color: white; 
-            color: #000;
-        }
-        h1 { font-size: 24px; color: #333; letter-spacing: 1px; text-transform: uppercase; }
+        body { font-family: sans-serif; text-align: center; padding-top: 50px; }
         #balance { font-size: 48px; font-weight: bold; margin: 20px 0; }
-        .asset { margin: 15px; font-size: 18px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
-        .up { color: #28a745; font-weight: bold; }
-        .down { color: #dc3545; font-weight: bold; }
-        strong { color: #000; }
+        .asset { font-size: 20px; margin: 10px; }
     </style>
 </head>
 <body>
@@ -28,26 +16,23 @@
     <script>
         async function fetchData() {
             try {
+                // Твоя рабочая ссылка ngrok
                 const response = await fetch('https://indissolubly-semichemical-lashell.ngrok-free.dev/balance');
                 const data = await response.json();
                 
-                document.getElementById('balance').innerText = `$${data.balance}`;
+                document.getElementById('balance').innerText = '$' + data.balance;
                 
                 const portfolioContainer = document.getElementById('portfolio');
                 portfolioContainer.innerHTML = '';
                 
                 data.portfolio.forEach(item => {
-                    const changeClass = item.change.startsWith('+') ? 'up' : 'down';
                     portfolioContainer.innerHTML += `
                         <div class="asset">
-                            ${item.asset}: <strong>$${item.price}</strong> 
-                            <span class="${changeClass}">${item.change}</span>
+                            ${item.asset}: <strong>$${item.price}</strong> (${item.change})
                         </div>
                     `;
                 });
-            } catch (error) {
-                console.error('Ошибка:', error);
-            }
+            } catch (e) { console.log(e); }
         }
         fetchData();
         setInterval(fetchData, 5000);
