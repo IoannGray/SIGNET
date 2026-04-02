@@ -115,7 +115,7 @@
                 const url = 'https://indissolubly-semichemical-lashell.ngrok-free.dev/balance';
                 const response = await fetch(url);
                 const data = await response.json();
-                
+                 
                 // Обновляем баланс
                 document.getElementById('balance').innerHTML = 
                     `${data.balance}<span class="currency">₽</span>`;
