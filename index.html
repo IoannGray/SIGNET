@@ -6,55 +6,111 @@
     <title>SIGNET Terminal</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #c5a059; --dark-bg: #0d0d0d; }
-        body { background-color: var(--dark-bg); color: #fff; font-family: 'Montserrat', sans-serif; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; }
-        .header-logo { font-family: 'Playfair Display', serif; font-size: 26px; letter-spacing: 12px; color: var(--gold); margin: 40px 0 30px; text-transform: uppercase; }
-        .balance-container { width: 90%; max-width: 360px; border: 1px solid rgba(197, 160, 89, 0.3); background: linear-gradient(145deg, #121212, #0a0a0a); padding: 40px 20px; text-align: center; margin-bottom: 40px; box-sizing: border-box; }
-        .label { font-size: 10px; letter-spacing: 4px; color: #666; text-transform: uppercase; margin-bottom: 20px; }
-        .balance-value { font-family: 'Playfair Display', serif; font-size: 42px; color: var(--gold); margin-bottom: 30px; }
-        .action-btn { display: inline-block; border: 1px solid var(--gold); padding: 12px 40px; color: var(--gold); text-decoration: none; font-size: 11px; letter-spacing: 5px; text-transform: uppercase; }
-        .section-wrapper { width: 90%; max-width: 360px; margin-bottom: 30px; }
-        .section-title { font-size: 10px; letter-spacing: 3px; color: #666; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 10px; margin-bottom: 15px; }
-        .row { display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .asset-name { font-size: 12px; letter-spacing: 1.5px; color: var(--gold); }
+        :root { --gold: #c5a059; --dark-bg: #0a0a0a; }
+        body { background-color: var(--dark-bg); color: #fff; font-family: 'Montserrat', sans-serif; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        
+        .logo { font-family: 'Playfair Display', serif; font-size: 24px; letter-spacing: 10px; color: var(--gold); margin: 30px 0 40px; text-transform: uppercase; font-weight: 300; }
+
+        /* Контейнер с золотой рамкой как на скрине */
+        .balance-card {
+            width: 100%;
+            max-width: 350px;
+            background: #111111;
+            border: 1px solid rgba(197, 160, 89, 0.25);
+            padding: 50px 20px;
+            text-align: center;
+            box-sizing: border-box;
+            margin-bottom: 50px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        .label { font-size: 10px; letter-spacing: 4px; color: #555; text-transform: uppercase; margin-bottom: 25px; }
+        
+        .balance-value { font-family: 'Playfair Display', serif; font-size: 44px; color: var(--gold); margin-bottom: 40px; }
+        .currency { font-size: 28px; margin-left: 10px; font-weight: 400; }
+
+        .btn {
+            display: inline-block;
+            border: 1px solid var(--gold);
+            padding: 14px 45px;
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 10px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+        }
+
+        /* Список портфолио */
+        .section-container { width: 100%; max-width: 350px; margin-bottom: 40px; }
+        .section-header { font-size: 10px; letter-spacing: 3px; color: #444; text-transform: uppercase; margin-bottom: 20px; }
+        
+        .item-row { display: flex; justify-content: space-between; align-items: flex-end; padding: 18px 0; border-bottom: 1px solid rgba(255,255,255,0.03); }
+        .item-name { font-size: 11px; letter-spacing: 1.5px; color: var(--gold); }
+        .item-data { text-align: right; }
+        .item-price { font-size: 14px; color: #aaa; margin-bottom: 2px; }
+        .item-change { font-size: 9px; font-weight: 600; }
+
+        /* Активность */
+        .activity-row { display: flex; font-size: 11px; padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.03); }
+        .act-time { color: #333; width: 60px; }
+        .act-desc { flex: 1; text-align: right; color: var(--gold); }
+        .act-desc b { color: #fff; font-weight: 400; }
+
         .up { color: #2ecc71; } .down { color: #e74c3c; }
-        .activity-row { display: flex; justify-content: space-between; padding: 12px 0; font-size: 11px; }
-        .time { color: #444; width: 50px; }
-        .desc { color: var(--gold); flex: 1; text-align: right; }
     </style>
 </head>
 <body>
-    <div class="header-logo">SIGNET</div>
-    <div class="balance-container">
+
+    <div class="logo">SIGNET</div>
+
+    <div class="balance-card">
         <div class="label">Current Balance</div>
         <div id="balance" class="balance-value">...</div>
-        <a href="#" class="action-btn">Ввод / Вывод</a>
+        <a href="#" class="btn">Ввод / Вывод</a>
     </div>
-    <div class="section-wrapper">
-        <div class="section-title">Portfolio</div>
+
+    <div class="section-container">
+        <div class="section-header">Portfolio</div>
         <div id="portfolio"></div>
     </div>
-    <div class="section-wrapper">
-        <div class="section-title">Latest Activity</div>
-        <div class="activity-row"><span class="time">21:40</span><span class="desc">Профит по <b>BRENT +1.2%</b></span></div>
-        <div class="activity-row"><span class="time">18:15</span><span class="desc">SMC: <b>Слом структуры DXY</b></span></div>
+
+    <div class="section-container">
+        <div class="section-header">Latest Activity</div>
+        <div class="activity-row">
+            <span class="act-time">21:40</span>
+            <span class="act-desc">Профит по <b>BRENT +1.2%</b></span>
+        </div>
+        <div class="activity-row">
+            <span class="act-time">18:15</span>
+            <span class="act-desc">SMC: <b>Слом структуры DXY</b></span>
+        </div>
     </div>
+
     <script>
-        async function update() {
-            const url = 'https://indissolubly-semichemical-lashell.ngrok-free.dev'; // Ссылка из твоего ngrok
+        async function load() {
+            // Твоя ссылка: https://indissolubly-semichemical-lashell.ngrok-free.dev
+            const url = 'https://indissolubly-semichemical-lashell.ngrok-free.dev'; 
             try {
                 const r = await fetch(url + '/balance', { headers: { 'ngrok-skip-browser-warning': 'true' } });
                 const d = await r.json();
-                document.getElementById('balance').innerHTML = d.balance + ' <span style="font-size:24px">₽</span>';
-                let html = '';
+                
+                document.getElementById('balance').innerHTML = `${d.balance} <span class="currency">₽</span>`;
+                
+                let h = '';
                 d.portfolio.forEach(i => {
                     const c = i.change.startsWith('+') ? 'up' : 'down';
-                    html += `<div class="row"><span class="asset-name">${i.asset}</span><div style="text-align:right"><div style="font-size:14px;color:#fff;">$${i.price}</div><div class="${c}" style="font-size:10px;">${i.change}</div></div></div>`;
+                    h += `<div class="item-row">
+                            <span class="item-name">${i.asset}</span>
+                            <div class="item-data">
+                                <div class="item-price">${i.price}</div>
+                                <div class="item-change ${c}">${i.change}</div>
+                            </div>
+                          </div>`;
                 });
-                document.getElementById('portfolio').innerHTML = html;
-            } catch (e) { console.error(e); }
+                document.getElementById('portfolio').innerHTML = h;
+            } catch (e) { console.log(e); }
         }
-        update(); setInterval(update, 5000);
+        load(); setInterval(load, 5000);
     </script>
 </body>
 </html>
