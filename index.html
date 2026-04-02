@@ -1,300 +1,40 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>SIGNET Wallet</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      background-color: #0B0E14; /* глубокий тёмный фон экрана */
-      font-family: system-ui, -apple-system, 'Inter', 'SF Pro Text', 'Segoe UI', Roboto, Helvetica, sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      padding: 16px;
-    }
-
-    /* Карточка кошелька — как мини-приложение */
-    .wallet {
-      max-width: 400px;
-      width: 100%;
-      background-color: #0F121A; /* основной фон карты */
-      border-radius: 40px;
-      padding: 24px 20px 32px;
-      box-shadow: 0 25px 40px rgba(0, 0, 0, 0.5);
-      transition: all 0.2s ease;
-    }
-
-    /* Заголовок SIGNET */
-    .wallet-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 28px;
-    }
-
-    .logo {
-      font-size: 28px;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-      background: linear-gradient(135deg, #FFFFFF 0%, #C0C4D0 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      text-shadow: 0 1px 0 rgba(255,255,255,0.05);
-    }
-
-    .badge-mini {
-      font-size: 12px;
-      color: #6E7687;
-      background: #1A1E28;
-      padding: 4px 10px;
-      border-radius: 40px;
-      font-weight: 500;
-    }
-
-    /* баланс */
-    .balance-section {
-      margin-bottom: 28px;
-    }
-
-    .balance-label {
-      font-size: 14px;
-      font-weight: 500;
-      letter-spacing: 0.5px;
-      color: #8F95A3;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-
-    .balance-amount {
-      font-size: 48px;
-      font-weight: 700;
-      color: #FFFFFF;
-      letter-spacing: -1px;
-      line-height: 1.1;
-      margin-bottom: 20px;
-    }
-
-    /* кнопки ввод / вывод */
-    .action-buttons {
-      display: flex;
-      gap: 16px;
-      margin-bottom: 32px;
-    }
-
-    .btn {
-      flex: 1;
-      text-align: center;
-      padding: 14px 0;
-      border-radius: 60px;
-      font-weight: 600;
-      font-size: 16px;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-
-    .btn-deposit {
-      background: #2E7D64;
-      color: white;
-      box-shadow: 0 2px 8px rgba(46,125,100,0.3);
-    }
-
-    .btn-deposit:active {
-      background: #236653;
-      transform: scale(0.97);
-    }
-
-    .btn-withdraw {
-      background: #1E212B;
-      color: #DCE1EC;
-      border: 1px solid #2C313E;
-    }
-
-    .btn-withdraw:active {
-      background: #2A2E3B;
-      transform: scale(0.97);
-    }
-
-    /* секция портфель */
-    .portfolio-title {
-      font-size: 16px;
-      font-weight: 600;
-      color: #B9BFCF;
-      margin-bottom: 12px;
-      letter-spacing: -0.2px;
-    }
-
-    .assets-list {
-      background: #0A0D13;
-      border-radius: 24px;
-      padding: 6px 0;
-      margin-bottom: 28px;
-    }
-
-    .asset-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 14px 16px;
-      border-bottom: 1px solid #181C26;
-    }
-
-    .asset-item:last-child {
-      border-bottom: none;
-    }
-
-    .asset-name {
-      font-weight: 600;
-      font-size: 16px;
-      color: #EFF2F9;
-    }
-
-    .asset-value {
-      font-weight: 600;
-      font-size: 16px;
-      color: #FFFFFF;
-      margin-right: 12px;
-    }
-
-    .asset-change {
-      font-size: 14px;
-      font-weight: 500;
-      min-width: 68px;
-      text-align: right;
-    }
-
-    .positive {
-      color: #2DCB7A;
-    }
-
-    .negative {
-      color: #F26C6C;
-    }
-
-    /* последняя активность */
-    .activity-title {
-      font-size: 16px;
-      font-weight: 600;
-      color: #B9BFCF;
-      margin-bottom: 12px;
-    }
-
-    .activity-list {
-      background: #0A0D13;
-      border-radius: 24px;
-      padding: 6px 0;
-    }
-
-    .activity-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 14px 16px;
-      border-bottom: 1px solid #181C26;
-      font-size: 14px;
-    }
-
-    .activity-item:last-child {
-      border-bottom: none;
-    }
-
-    .activity-time {
-      color: #6F7689;
-      font-weight: 500;
-      font-family: monospace;
-      letter-spacing: 0.2px;
-    }
-
-    .activity-desc {
-      color: #D2D8E8;
-      font-weight: 500;
-    }
-
-    .activity-profit {
-      color: #2DCB7A;
-      font-weight: 600;
-    }
-
-    /* микро-подпись */
-    .footer-note {
-      margin-top: 20px;
-      text-align: center;
-      font-size: 10px;
-      color: #3A3F4E;
-    }
-  </style>
+    <title>Signet</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body>
-<div class="wallet">
-  <div class="wallet-header">
-    <div class="logo">SIGNET</div>
-    <div class="badge-mini">мини-приложение</div>
-  </div>
+<body style="background-color: #000; color: #fff; font-family: -apple-system, sans-serif; text-align: center; padding-top: 50px; margin: 0;">
+    <h1 style="font-weight: 300; letter-spacing: 2px; text-transform: uppercase; font-size: 18px;">Signet</h1>
+    <div id="balance" style="font-size: 48px; font-weight: bold; margin: 30px 0;">Загрузка...</div>
+    <div id="portfolio" style="max-width: 300px; margin: 0 auto; text-align: left;"></div>
 
-  <div class="balance-section">
-    <div class="balance-label">CURRENT BALANCE</div>
-    <div class="balance-amount">12,500.50 ₽</div>
-  </div>
-
-  <div class="action-buttons">
-    <div class="btn btn-deposit">ВВОД</div>
-    <div class="btn btn-withdraw">ВЫВОД</div>
-  </div>
-
-  <div class="portfolio-title">PORTFOLIO</div>
-  <div class="assets-list">
-    <div class="asset-item">
-      <span class="asset-name">GOLD</span>
-      <div style="display: flex; align-items: baseline;">
-        <span class="asset-value">2,150.40</span>
-        <span class="asset-change positive">+0.45%</span>
-      </div>
-    </div>
-    <div class="asset-item">
-      <span class="asset-name">BRENT</span>
-      <div style="display: flex; align-items: baseline;">
-        <span class="asset-value">82.30</span>
-        <span class="asset-change negative">-1.10%</span>
-      </div>
-    </div>
-    <div class="asset-item">
-      <span class="asset-name">BTC</span>
-      <div style="display: flex; align-items: baseline;">
-        <span class="asset-value">67,200.15</span>
-        <span class="asset-change positive">+2.30%</span>
-      </div>
-    </div>
-    <div class="asset-item">
-      <span class="asset-name">DXY</span>
-      <div style="display: flex; align-items: baseline;">
-        <span class="asset-value">103.85</span>
-        <span class="asset-change positive">+0.12%</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="activity-title">LATEST ACTIVITY</div>
-  <div class="activity-list">
-    <div class="activity-item">
-      <span class="activity-time">21:40</span>
-      <span class="activity-desc">Профит по BRENT</span>
-      <span class="activity-profit">+1.2%</span>
-    </div>
-    <div class="activity-item">
-      <span class="activity-time">18:15</span>
-      <span class="activity-desc">SMC: Слом структуры DXY</span>
-      <span class="activity-profit" style="color: #B9BFCF;">—</span>
-    </div>
-  </div>
-  <div class="footer-note">SIGNET • в реальном времени</div>
-</div>
+    <script>
+        async function fetchData() {
+            try {
+                // ПРОВЕРЬ ССЫЛКУ ИЗ NGROK (второе окно терминала)
+                const url = 'https://indissolubly-semichemical-lashell.ngrok-free.dev/balance';
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                document.getElementById('balance').innerText = '$' + data.balance;
+                
+                const portfolioContainer = document.getElementById('portfolio');
+                portfolioContainer.innerHTML = '';
+                
+                data.portfolio.forEach(item => {
+                    const color = item.change.startsWith('+') ? '#34c759' : '#ff3b30';
+                    portfolioContainer.innerHTML += `
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 18px; border-bottom: 1px solid #222; padding-bottom: 5px;">
+                            <span>${item.asset}</span>
+                            <span>$${item.price} <span style="color: ${color}; font-size: 14px;">(${item.change})</span></span>
+                        </div>
+                    `;
+                });
+            } catch (e) { console.log('Error:', e); }
+        }
+        fetchData();
+        setInterval(fetchData, 5000);
+    </script>
 </body>
 </html>
