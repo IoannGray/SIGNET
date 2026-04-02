@@ -6,146 +6,86 @@
     <title>SIGNET</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #c5a059; --bg: #070707; }
-        body { 
-            background-color: var(--bg); 
-            color: #fff; 
-            font-family: 'Montserrat', sans-serif; 
-            margin: 0; 
-            padding: 20px; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            min-height: 100vh; 
-        }
+        :root { --gold: #c5a059; --bg: #070707; --text-gray: #555; }
+        body { background-color: var(--bg); color: #fff; font-family: 'Montserrat', sans-serif; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
         
-        .logo { 
-            font-family: 'Playfair Display', serif; 
-            font-size: 26px; 
-            letter-spacing: 12px; 
-            color: var(--gold); 
-            margin-top: 40px; 
-            margin-bottom: 50px; 
-            font-weight: 400; 
-            text-transform: uppercase; 
-        }
+        .logo { font-family: 'Playfair Display', serif; font-size: 26px; letter-spacing: 12px; color: var(--gold); margin: 40px 0 50px; text-transform: uppercase; }
 
-        .balance-frame {
+        /* Та самая рамка с балансом из скрина IMG_5458 */
+        .balance-card {
             width: 100%;
             max-width: 350px;
-            border: 1px solid rgba(197, 160, 89, 0.35);
-            background: linear-gradient(180deg, #111 0%, #0a0a0a 100%);
-            padding: 45px 20px;
+            border: 1px solid rgba(197, 160, 89, 0.2);
+            background: linear-gradient(180deg, #111 0%, #080808 100%);
+            padding: 50px 20px;
             text-align: center;
             box-sizing: border-box;
-            margin-bottom: 55px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+            margin-bottom: 50px;
         }
 
-        .label { 
-            font-size: 10px; 
-            letter-spacing: 5px; 
-            color: #555; 
-            text-transform: uppercase; 
-            margin-bottom: 25px; 
-            font-weight: 300; 
-        }
-        
-        .balance-val { 
-            font-family: 'Playfair Display', serif; 
-            font-size: 46px; 
-            color: var(--gold); 
-            margin-bottom: 40px; 
-            font-weight: 500; 
-        }
-        
-        .currency { 
-            font-size: 28px; 
-            margin-left: 8px; 
-            font-family: 'Montserrat', sans-serif; 
-            font-weight: 300; 
-        }
+        .label { font-size: 9px; letter-spacing: 4px; color: var(--text-gray); text-transform: uppercase; margin-bottom: 30px; font-weight: 300; }
+        .balance-val { font-family: 'Playfair Display', serif; font-size: 48px; color: var(--gold); margin-bottom: 45px; font-weight: 400; }
+        .currency { font-size: 28px; margin-left: 10px; font-family: 'Montserrat', sans-serif; font-weight: 200; }
 
         .btn-action {
             display: inline-block;
             border: 1px solid var(--gold);
-            padding: 15px 50px;
+            padding: 12px 40px;
             color: var(--gold);
             text-decoration: none;
-            font-size: 11px;
+            font-size: 10px;
             letter-spacing: 6px;
             text-transform: uppercase;
-            transition: 0.3s;
         }
 
-        .section-box { width: 100%; max-width: 350px; margin-bottom: 45px; }
+        /* Portfolio section */
+        .section-container { width: 100%; max-width: 350px; margin-bottom: 40px; }
+        .section-title { font-size: 10px; letter-spacing: 3px; color: var(--text-gray); text-transform: uppercase; margin-bottom: 25px; }
         
-        .section-title { 
-            font-size: 10px; 
-            letter-spacing: 4px; 
-            color: #444; 
-            text-transform: uppercase; 
-            margin-bottom: 25px; 
-            border-bottom: 1px solid #1a1a1a; 
-            padding-bottom: 12px; 
-        }
-        
-        .row-item { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: flex-end; 
-            padding: 20px 0; 
-            border-bottom: 1px solid #141414; 
-        }
-        
-        .name { 
-            font-size: 12px; 
-            letter-spacing: 2px; 
-            color: var(--gold); 
-            font-weight: 300; 
-        }
-        
-        .price { font-size: 14px; color: #fff; margin-bottom: 4px; }
-        
-        .activity-row { display: flex; font-size: 11px; padding: 18px 0; border-bottom: 1px solid #141414; }
-        .time { color: #333; width: 65px; }
-        .desc { flex: 1; text-align: right; color: var(--gold); }
-        .desc b { color: #fff; font-weight: 400; }
+        .asset-row { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.03); }
+        .asset-name { font-size: 11px; letter-spacing: 2px; color: var(--gold); text-transform: uppercase; }
+        .asset-data { font-size: 13px; color: #fff; font-weight: 400; }
+        .change { font-size: 10px; margin-left: 8px; font-weight: 600; }
 
-        .up { color: #2ecc71; } 
-        .down { color: #e74c3c; }
+        /* Latest Activity section */
+        .activity-row { display: flex; font-size: 11px; padding: 12px 0; }
+        .act-time { color: #333; width: 60px; font-weight: 300; }
+        .act-desc { flex: 1; text-align: right; color: var(--gold); font-weight: 300; }
+        .act-desc b { color: #fff; font-weight: 400; }
+
+        .up { color: #2ecc71; } .down { color: #e74c3c; }
     </style>
 </head>
 <body>
 
-    <div class="logo">SIGNET</div>
+    <div class="logo">S I G N E T</div>
 
-    <div class="balance-frame">
+    <div class="balance-card">
         <div class="label">Current Balance</div>
         <div id="balance" class="balance-val">...</div>
         <a href="#" class="btn-action">Ввод / Вывод</a>
     </div>
 
-    <div class="section-box">
+    <div class="section-container">
         <div class="section-title">Portfolio</div>
         <div id="portfolio"></div>
     </div>
 
-    <div class="section-box">
+    <div class="section-container">
         <div class="section-title">Latest Activity</div>
         <div class="activity-row">
-            <span class="time">21:40</span>
-            <span class="desc">Профит по <b>BRENT +1.2%</b></span>
+            <span class="act-time">21:40</span>
+            <span class="act-desc">Профит по <b>BRENT +1.2%</b></span>
         </div>
         <div class="activity-row">
-            <span class="time">18:15</span>
-            <span class="desc">SMC: <b>Слом структуры DXY</b></span>
+            <span class="act-time">18:15</span>
+            <span class="act-desc">SMC: <b>Слом структуры DXY</b></span>
         </div>
     </div>
 
     <script>
-        async function sync() {
-            // Используем твою рабочую ссылку из ngrok
+        async function update() {
+            // Твоя ссылка ngrok:
             const url = 'https://indissolubly-semichemical-lashell.ngrok-free.dev'; 
             try {
                 const r = await fetch(url + '/balance', { 
@@ -158,19 +98,18 @@
                 let h = '';
                 d.portfolio.forEach(i => {
                     const c = i.change.startsWith('+') ? 'up' : 'down';
-                    h += `<div class="row-item">
-                            <span class="name">${i.asset}</span>
-                            <div style="text-align: right;">
-                                <div class="price">$${i.price}</div>
-                                <div class="change ${c}" style="font-size:10px;">${i.change}</div>
+                    h += `<div class="asset-row">
+                            <span class="asset-name">${i.asset}</span>
+                            <div class="asset-data">
+                                ${i.price} <span class="change ${c}">${i.change}</span>
                             </div>
                           </div>`;
                 });
                 document.getElementById('portfolio').innerHTML = h;
-            } catch (e) { console.log("Connection lost..."); }
+            } catch (e) { console.log("Check connection..."); }
         }
-        sync();
-        setInterval(sync, 5000);
+        update();
+        setInterval(update, 5000);
     </script>
 </body>
 </html>
