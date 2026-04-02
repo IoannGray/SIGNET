@@ -9,51 +9,52 @@
         body { background-color: #0a0b0d; color: #c5a059; font-family: 'Montserrat', sans-serif; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
         .header { font-family: 'Playfair Display', serif; font-size: 22px; letter-spacing: 6px; margin-top: 50px; margin-bottom: 40px; text-transform: uppercase; }
         .balance-section { width: 100%; max-width: 350px; text-align: center; margin-bottom: 50px; }
-        .label { font-size: 10px; letter-spacing: 3px; color: #666; text-transform: uppercase; margin-bottom: 10px; }
         .balance-value { font-family: 'Playfair Display', serif; font-size: 46px; font-weight: 700; color: #fff; margin: 0; }
-        .currency { color: #c5a059; font-size: 28px; margin-left: 5px; }
-        .portfolio-list { width: 100%; max-width: 350px; }
-        .asset-row { display: flex; justify-content: space-between; align-items: center; padding: 18px 0; border-bottom: 1px solid #1a1c1f; }
-        .asset-name { font-size: 13px; letter-spacing: 1.5px; color: #8a8d91; text-transform: uppercase; }
-        .asset-price { font-size: 15px; color: #fff; display: block; }
-        .up { color: #2ecc71; font-size: 11px; }
-        .down { color: #e74c3c; font-size: 11px; }
+        .asset-row { display: flex; justify-content: space-between; align-items: center; padding: 18px 0; border-bottom: 1px solid #1a1c1f; width: 100%; max-width: 350px;}
+        .up { color: #2ecc71; } .down { color: #e74c3c; }
     </style>
 </head>
 <body>
     <div class="header">SIGNET</div>
     <div class="balance-section">
-        <div class="label">Total Assets</div>
-        <div id="balance" class="balance-value">Загрузка...</div>
+        <div style="font-size: 10px; color: #666; letter-spacing: 3px;">TOTAL ASSETS</div>
+        <div id="balance" class="balance-value">...</div>
     </div>
-    <div class="label" style="width: 100%; max-width: 350px; text-align: left;">Market Overview</div>
-    <div id="portfolio" class="portfolio-list"></div>
+    <div id="portfolio" style="width: 100%; max-width: 350px;"></div>
 
     <script>
-        async function updateData() {
+        async function update() {
+            //'https://indissolubly-semichemical-lashell.ngrok-free.dev';
+
+            const baseUrl = 'ВСТАВЬ_СЮДА_ССЫЛКУ_ИЗ_NGROK'; 
+            
             try {
-                // ВСТАВЬ СЮДА ССЫЛКУ ИЗ ТЕРМИНАЛА (NGROK)
-                const url = 'https://indissolubly-semichemical-lashell.ngrok-free.dev';
-                const response = await fetch(url);
-                const data = await response.json();
-                document.getElementById('balance').innerHTML = `${data.balance}<span class="currency">₽</span>`;
-                const container = document.getElementById('portfolio');
-                container.innerHTML = '';
-                data.portfolio.forEach(item => {
-                    const isUp = item.change.startsWith('+');
-                    container.innerHTML += `
-                        <div class="asset-row">
-                            <span class="asset-name">${item.asset}</span>
-                            <div style="text-align:right">
-                                <span class="asset-price">$${item.price}</span>
-                                <span class="${isUp ? 'up' : 'down'}">${item.change}</span>
-                            </div>
-                        </div>`;
+                const r = await fetch(baseUrl + '/balance', {
+                    method: 'GET',
+                    headers: { 'ngrok-skip-browser-warning': 'true' } // ЭТО УБЕРЕТ ОКНО ОТ NGROK
                 });
-            } catch (error) { document.getElementById('balance').innerText = "Ошибка коннекта"; }
+                const d = await r.json();
+                document.getElementById('balance').innerHTML = d.balance + '<span style="color:#c5a059; font-size:28px;">₽</span>';
+                
+                let html = '';
+                d.portfolio.forEach(i => {
+                    const c = i.change.startsWith('+') ? 'up' : 'down';
+                    html += `<div class="asset-row">
+                        <span style="color:#8a8d91; text-transform:uppercase; font-size:13px;">${i.asset}</span>
+                        <div style="text-align:right">
+                            <div style="color:#fff;">$${i.price}</div>
+                            <div class="${c}" style="font-size:11px;">${i.change}</div>
+                        </div>
+                    </div>`;
+                });
+                document.getElementById('portfolio').innerHTML = html;
+            } catch (e) {
+                document.getElementById('balance').innerText = "Ошибка";
+                console.error(e);
+            }
         }
-        updateData();
-        setInterval(updateData, 5000);
+        update();
+        setInterval(update, 5000);
     </script>
 </body>
 </html>
