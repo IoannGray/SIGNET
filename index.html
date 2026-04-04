@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>SIGNET — премиальный кошелёк</title>
-    <!-- Подключаем шрифт, близкий к Capitalis: Cinzel (элегантные тонкие засечки) -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -14,7 +13,7 @@
         }
 
         body {
-            background-color: #0A0A0A; /* глубокий чёрный с оттенком */
+            background-color: #0A0A0A;
             font-family: 'Cinzel', 'Times New Roman', serif;
             display: flex;
             justify-content: center;
@@ -23,287 +22,297 @@
             padding: 20px;
         }
 
-        /* Основной контейнер — имитация экрана приложения */
         .app {
             max-width: 480px;
             width: 100%;
             background: #111111;
             border-radius: 32px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(212, 175, 55, 0.2);
-            padding: 32px 24px 48px;
-            transition: all 0.3s ease;
+            padding: 28px 20px 36px;
         }
 
-        /* Грифон (временная SVG-иконка, стилизованная под золото) */
-        .griffin {
-            text-align: center;
-            margin-bottom: 16px;
+        /* Заголовок и грифон */
+        .header {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            padding-bottom: 12px;
         }
-        .griffin svg {
-            width: 56px;
-            height: 56px;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-        .griffin svg path, .griffin svg polygon {
-            fill: #C9A03D;
-            stroke: #C9A03D;
-            stroke-width: 0.5;
+        .griffin-icon svg {
+            width: 32px;
+            height: 32px;
         }
-
-        /* Название SIGNET */
         .app-name {
-            text-align: center;
-            font-size: 28px;
+            font-size: 22px;
             font-weight: 600;
-            letter-spacing: 6px;
+            letter-spacing: 4px;
             color: #D4AF37;
-            text-transform: uppercase;
-            margin-bottom: 32px;
-            word-break: keep-all;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        }
+        .close-btn {
+            color: #D4AF37;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0.7;
         }
 
-        /* Блок баланса */
+        /* Баланс */
         .balance-section {
             text-align: center;
-            margin-bottom: 32px;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
-            padding-bottom: 24px;
+            margin-bottom: 28px;
         }
         .balance-label {
-            font-size: 12px;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: rgba(212, 175, 55, 0.7);
-            margin-bottom: 8px;
-        }
-        .balance-amount {
-            font-size: 48px;
-            font-weight: 700;
-            color: #D4AF37;
+            font-size: 11px;
             letter-spacing: 2px;
-            line-height: 1.1;
-        }
-        .balance-currency {
-            font-size: 20px;
-            font-weight: 500;
-            margin-left: 6px;
-            color: #C9A03D;
-        }
-
-        /* Кнопки ввод / вывод */
-        .action-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin-bottom: 48px;
-        }
-        .btn {
-            background: transparent;
-            border: 1.5px solid #D4AF37;
-            padding: 12px 32px;
-            font-family: 'Cinzel', serif;
-            font-size: 18px;
-            font-weight: 600;
-            letter-spacing: 2px;
-            color: #D4AF37;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            border-radius: 40px;
-            backdrop-filter: blur(2px);
-            background-color: rgba(0,0,0,0.3);
-        }
-        .btn:hover {
-            background-color: rgba(212, 175, 55, 0.15);
-            border-color: #E5C158;
-            color: #E5C158;
-            box-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
-        }
-        .btn:active {
-            transform: scale(0.97);
-        }
-
-        /* Тикеры активов */
-        .tickers {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 16px 12px;
-            margin-top: 16px;
-        }
-        .ticker-card {
-            flex: 1;
-            min-width: 100px;
-            background: rgba(20, 20, 20, 0.7);
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            border-radius: 20px;
-            padding: 12px 8px;
-            text-align: center;
-            transition: 0.2s;
-        }
-        .ticker-symbol {
-            font-size: 14px;
-            font-weight: 600;
-            letter-spacing: 1px;
-            color: #D4AF37;
+            color: rgba(212, 175, 55, 0.6);
             margin-bottom: 6px;
         }
-        .ticker-value {
-            font-size: 16px;
+        .balance-amount {
+            font-size: 42px;
+            font-weight: 700;
+            color: #D4AF37;
+        }
+        .balance-currency {
+            font-size: 18px;
             font-weight: 500;
+            margin-left: 4px;
+        }
+
+        /* Кнопки ввод/вывод */
+        .action-row {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 36px;
+        }
+        .action-btn {
+            background: transparent;
+            border: 1.5px solid #D4AF37;
+            padding: 8px 28px;
+            font-family: 'Cinzel', serif;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: #D4AF37;
+            text-transform: uppercase;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.2s;
+            background: rgba(0,0,0,0.4);
+        }
+        .action-btn:hover {
+            background: rgba(212,175,55,0.15);
+            border-color: #E5C158;
+        }
+
+        /* Портфолио */
+        .portfolio-title {
+            font-size: 14px;
+            letter-spacing: 3px;
+            color: #D4AF37;
+            margin-bottom: 12px;
+            border-left: 2px solid #D4AF37;
+            padding-left: 10px;
+        }
+        .assets-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+        .asset-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            border-bottom: 1px dashed rgba(212,175,55,0.2);
+            padding-bottom: 8px;
+        }
+        .asset-name {
+            font-weight: 500;
+            color: #D4AF37;
+            font-size: 15px;
+        }
+        .asset-value {
+            font-weight: 600;
             color: #E8D18C;
-            word-break: break-word;
+            font-size: 15px;
         }
-        .ticker-change {
-            font-size: 11px;
-            margin-top: 5px;
-            color: #8f8f8f;
+        .asset-change {
+            font-size: 12px;
+            margin-left: 8px;
+            font-weight: 500;
+        }
+        .positive {
+            color: #2ecc71;
+        }
+        .negative {
+            color: #e74c3c;
         }
 
-        /* Подвал – для атмосферы */
+        /* Лента активности */
+        .activity-title {
+            font-size: 14px;
+            letter-spacing: 3px;
+            color: #D4AF37;
+            margin-bottom: 12px;
+            border-left: 2px solid #D4AF37;
+            padding-left: 10px;
+        }
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .activity-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #bbaa77;
+            border-bottom: 1px dotted rgba(212,175,55,0.15);
+            padding-bottom: 6px;
+        }
+        .activity-time {
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+        .activity-desc {
+            text-align: right;
+            max-width: 70%;
+        }
+
         .footer-note {
-            margin-top: 40px;
+            margin-top: 28px;
             text-align: center;
-            font-size: 9px;
-            letter-spacing: 1px;
-            color: rgba(212, 175, 55, 0.4);
-            border-top: 1px solid rgba(212, 175, 55, 0.2);
-            padding-top: 20px;
-        }
-
-        /* Анимация загрузки */
-        .loading {
-            opacity: 0.6;
+            font-size: 8px;
+            color: rgba(212,175,55,0.3);
         }
     </style>
 </head>
 <body>
 <div class="app">
-    <!-- Грифон (символ) -->
-    <div class="griffin">
-        <!-- Стилизованный грифон в векторе (упрощённо, но узнаваемо) -->
-        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M50 15 L65 30 L60 45 L70 55 L85 50 L80 65 L65 70 L55 85 L45 85 L35 70 L20 65 L15 50 L30 55 L40 45 L35 30 L50 15Z" fill="#C9A03D" stroke="#D4AF37" stroke-width="1.2"/>
-            <circle cx="50" cy="38" r="5" fill="#111" stroke="#D4AF37" stroke-width="1"/>
-            <path d="M45 48 L55 48 L52 55 L48 55 Z" fill="#C9A03D"/>
-            <path d="M75 40 L85 30 L80 45 L75 40Z" fill="#C9A03D" stroke="#D4AF37"/>
-            <path d="M25 40 L15 30 L20 45 L25 40Z" fill="#C9A03D" stroke="#D4AF37"/>
-        </svg>
+    <div class="header">
+        <div class="logo-area">
+            <div class="griffin-icon">
+                <svg viewBox="0 0 40 40" width="32" height="32">
+                    <path d="M20 5 L28 15 L24 25 L32 30 L28 38 L20 34 L12 38 L8 30 L16 25 L12 15 L20 5Z" fill="#C9A03D" stroke="#D4AF37" stroke-width="0.8"/>
+                    <circle cx="20" cy="18" r="3" fill="#111"/>
+                </svg>
+            </div>
+            <div class="app-name">SIGNET</div>
+        </div>
+        <div class="close-btn">✕</div>
     </div>
-
-    <div class="app-name">SIGNET</div>
 
     <div class="balance-section">
-        <div class="balance-label">ДОСТУПНЫЙ БАЛАНС</div>
-        <div class="balance-amount">
-            12 450.75<span class="balance-currency">USD</span>
-        </div>
+        <div class="balance-label">CURRENT BALANCE</div>
+        <div class="balance-amount">12,500.50<span class="balance-currency">₽</span></div>
     </div>
 
-    <div class="action-buttons">
-        <button class="btn" id="depositBtn">ВВОД</button>
-        <button class="btn" id="withdrawBtn">ВЫВОД</button>
+    <div class="action-row">
+        <button class="action-btn" id="depositBtn">ВВОД</button>
+        <button class="action-btn" id="withdrawBtn">ВЫВОД</button>
     </div>
 
-    <div class="tickers" id="tickersContainer">
-        <!-- Заглушки, потом заполнятся из API -->
-        <div class="ticker-card"><div class="ticker-symbol">DXY</div><div class="ticker-value">—</div><div class="ticker-change"></div></div>
-        <div class="ticker-card"><div class="ticker-symbol">XAU/USD</div><div class="ticker-value">—</div><div class="ticker-change"></div></div>
-        <div class="ticker-card"><div class="ticker-symbol">BTC</div><div class="ticker-value">—</div><div class="ticker-change"></div></div>
-        <div class="ticker-card"><div class="ticker-symbol">BRENT</div><div class="ticker-value">—</div><div class="ticker-change"></div></div>
+    <div class="portfolio-title">PORTFOLIO</div>
+    <div class="assets-grid" id="assetsGrid">
+        <!-- Данные будут заполнены из API -->
+        <div class="asset-item"><span class="asset-name">GOLD</span><span><span class="asset-value">—</span><span class="asset-change"></span></span></div>
+        <div class="asset-item"><span class="asset-name">BRENT</span><span><span class="asset-value">—</span><span class="asset-change"></span></span></div>
+        <div class="asset-item"><span class="asset-name">BTC</span><span><span class="asset-value">—</span><span class="asset-change"></span></span></div>
+        <div class="asset-item"><span class="asset-name">DXY</span><span><span class="asset-value">—</span><span class="asset-change"></span></span></div>
     </div>
 
-    <div class="footer-note">
-        ЗАЩИЩЕННЫЙ КОШЕЛЁК • SIGNET
+    <div class="activity-title">LATEST ACTIVITY</div>
+    <div class="activity-list" id="activityList">
+        <div class="activity-item"><span class="activity-time">--:--</span><span class="activity-desc">Загрузка...</span></div>
     </div>
+    <div class="footer-note">SIGNET • ЗАЩИЩЕННЫЙ КОШЕЛЁК</div>
 </div>
 
 <script>
-    // Функция для получения курсов с открытых API
-    // DXY - индекс доллара (сложно найти бесплатный прямой API, используем альтернативу через mock или yahoo finance proxy)
-    // Для демо пока используем публичные API: 
-    // - XAU/USD (золото) через metals-api или просто binance? Упростим: возьмем с binance XAU/USDT? Но лучше через free API.
-    // Реализуем реальные запросы, но с запасными значениями на случай ошибок.
+    // Базовый URL бэкенда (потом замените на реальный)
+    const API_BASE = "http://localhost:8000";
+    // Для теста используем demo telegram_id, в реальном WebApp получите из Telegram.WebApp.initDataUnsafe.user.id
+    const TELEGRAM_ID = "demo_user_123";
 
-    async function fetchTickers() {
-        // Массив с конфигурациями тикеров
-        const configs = [
-            { id: 'DXY', apiUrl: 'https://api.exchangerate.host/convert?from=USD&to=USD&amount=1', parser: () => '104.32' }, // DXY нет напрямую, заглушка потом заменим на альтернативный источник
-            { id: 'XAU/USD', apiUrl: 'https://api.gold-api.com/price/XAU', parser: (data) => data?.price ? `$${data.price}` : null },
-            { id: 'BTC', apiUrl: 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd', parser: (data) => data?.bitcoin?.usd ? `$${data.bitcoin.usd.toLocaleString()}` : null },
-            { id: 'BRENT', apiUrl: 'https://api.energy-charts.info/price?bzn=DE&year=2023', parser: () => '$84.50' } // упрощённо, т.к. нефть сложнее
-        ];
-
-        // Но чтобы работало красиво, я сделаю универсальные запросы, плюс запасные значения.
-        // Поскольку DXY и BRENT требуют специфичных API, я временно добавлю моки, но с возможностью обновления.
-        
-        const tickerElements = document.querySelectorAll('.ticker-card');
-        // Для наглядности обновим BTC и XAU через реальные API, а DXY и BRENT пока с имитацией (позже подставим нормальные источники).
-        
-        // 1. Запрос BTC
+    // Функция загрузки портфеля (цены + изменения)
+    async function loadPortfolio() {
         try {
-            const btcResp = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
-            const btcData = await btcResp.json();
-            if (btcData.bitcoin && btcData.bitcoin.usd) {
-                tickerElements[2].querySelector('.ticker-value').innerText = `$${btcData.bitcoin.usd.toLocaleString()}`;
-                tickerElements[2].querySelector('.ticker-change')?.remove(); // убираем лишнее
-            } else {
-                throw new Error();
+            const resp = await fetch(`${API_BASE}/portfolio`);
+            if (!resp.ok) throw new Error();
+            const data = await resp.json();
+            // data = { "GOLD": {price, change_percent}, "BRENT": ..., "BTC": ..., "DXY": ... }
+            const assets = ["GOLD", "BRENT", "BTC", "DXY"];
+            const container = document.getElementById("assetsGrid");
+            const items = container.querySelectorAll(".asset-item");
+            for (let i = 0; i < assets.length; i++) {
+                const sym = assets[i];
+                const info = data[sym];
+                if (info) {
+                    const price = info.price.toFixed(2);
+                    const change = info.change_percent.toFixed(2);
+                    const changeClass = change >= 0 ? "positive" : "negative";
+                    const sign = change >= 0 ? "+" : "";
+                    items[i].querySelector(".asset-value").innerText = `${price} ${sym === "DXY" ? "" : "$"}`;
+                    items[i].querySelector(".asset-change").innerHTML = `<span class="${changeClass}">${sign}${change}%</span>`;
+                }
             }
         } catch(e) {
-            tickerElements[2].querySelector('.ticker-value').innerText = '$63,200';
-            tickerElements[2].querySelector('.ticker-change')?.remove();
-        }
-
-        // 2. XAU/USD (золото) – используем metals-api (требуется ключ?) Попробуем бесплатный через francois
-        try {
-            // Бесплатный эндпоинт от metalpriceapi.com требует ключа, поэтому используем альтернативный: 
-            // Мой вариант – через goldapi.io (но там нужен ключ). В демо пока установим реалистичное значение с запросом к binance фьючерс?
-            // Для простоты сделаю запрос к CoinGecko на gold? У них нет. Возьму с mock.
-            const xauResp = await fetch('https://api.gold-api.com/price/XAU');
-            if(xauResp.ok) {
-                const xauData = await xauResp.json();
-                if(xauData.price) {
-                    tickerElements[1].querySelector('.ticker-value').innerText = `$${xauData.price}`;
-                } else throw new Error();
-            } else {
-                throw new Error();
-            }
-        } catch(e) {
-            tickerElements[1].querySelector('.ticker-value').innerText = '$2,345.80';
-        }
-        
-        // 3. DXY – нет простого бесплатного API без регистрации, поэтому пока ставим значение с обновлением из имитации
-        // Позже можно подключить через финсервисы типа alphavantage (нужен ключ). Сейчас покажем реальный индекс через альтернативу: 
-        // Будем получать через курсы валют? Не точно. Оставлю динамическое обновление через фиктивный API, но для демонстрации – оставлю статику с заметкой.
-        tickerElements[0].querySelector('.ticker-value').innerText = '104.28';
-        
-        // 4. BRENT – нефть марки Brent, можно через нефтяные API. Для теста пока в реальном времени через запрос к 'https://api.energy-charts.info/price?bzn=DE'
-        try {
-            const brentResp = await fetch('https://api.energy-charts.info/price?bzn=DE&year=2023');
-            if(brentResp.ok){
-                const data = await brentResp.json();
-                // Нефть не совсем корректно, но для красоты поставим цену
-                tickerElements[3].querySelector('.ticker-value').innerText = '$84.20';
-            } else throw new Error();
-        } catch(e) {
-            tickerElements[3].querySelector('.ticker-value').innerText = '$84.50';
+            console.warn("Ошибка загрузки портфеля", e);
         }
     }
-    
-    // Вызовем загрузку курсов при старте
-    fetchTickers();
-    // Обновляем каждые 60 секунд (для демо)
-    setInterval(fetchTickers, 60000);
-    
-    // Обработчики кнопок (пока заглушки)
-    document.getElementById('depositBtn').addEventListener('click', () => {
-        alert('Функция пополнения кошелька SIGNET в разработке. Здесь будет интеграция с платёжными системами.');
-    });
-    document.getElementById('withdrawBtn').addEventListener('click', () => {
-        alert('Функция вывода средств. Для демо-версии пока не активна.');
-    });
+
+    // Функция загрузки активности
+    async function loadActivity() {
+        try {
+            const resp = await fetch(`${API_BASE}/activity/${TELEGRAM_ID}`);
+            if (!resp.ok) throw new Error();
+            const activities = await resp.json(); // [{time: "21:40", description: "Профит по BRENT +1.2%"}, ...]
+            const container = document.getElementById("activityList");
+            if (activities.length === 0) {
+                container.innerHTML = '<div class="activity-item"><span class="activity-time">—</span><span class="activity-desc">Нет активности</span></div>';
+                return;
+            }
+            container.innerHTML = activities.map(act => `
+                <div class="activity-item">
+                    <span class="activity-time">${act.time}</span>
+                    <span class="activity-desc">${act.description}</span>
+                </div>
+            `).join('');
+        } catch(e) {
+            console.warn("Ошибка загрузки активности", e);
+        }
+    }
+
+    // Загрузка баланса
+    async function loadBalance() {
+        try {
+            const resp = await fetch(`${API_BASE}/balance/${TELEGRAM_ID}`);
+            if (resp.ok) {
+                const data = await resp.json();
+                const balanceElem = document.querySelector(".balance-amount");
+                if (data.balance !== undefined) {
+                    balanceElem.innerHTML = `${data.balance.toLocaleString()}<span class="balance-currency">₽</span>`;
+                }
+            }
+        } catch(e) {}
+    }
+
+    // Обработчики кнопок
+    document.getElementById("depositBtn").onclick = () => alert("Пополнение будет доступно в ближайшее время");
+    document.getElementById("withdrawBtn").onclick = () => alert("Вывод средств через защищённый канал");
+
+    // Инициализация
+    loadPortfolio();
+    loadActivity();
+    loadBalance();
+    setInterval(() => { loadPortfolio(); }, 60000); // обновление цен раз в минуту
 </script>
 </body>
 </html>
