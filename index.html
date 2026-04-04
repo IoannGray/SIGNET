@@ -1,98 +1,124 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400&family=Montserrat:wght@100;200;300&display=swap" rel="stylesheet">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SIGNET</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@200;300;400&family=Montserrat:wght@100;200;300;400&display=swap" rel="stylesheet">
+    <title>SIGNET Heritage</title>
+    
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400&family=Montserrat:wght@100;200;300;400&display=swap" rel="stylesheet">
+    
     <style>
-        :root { --gold: #c5a059; --bg: #070707; }
+        :root { 
+            --gold: #c5a059; 
+            --bg: #111417; /* Глубокий графитовый */
+        }
+        
         body { 
             background-color: var(--bg); 
             color: #fff; 
             font-family: 'Montserrat', sans-serif; 
             margin: 0; 
-            padding: 20px; 
+            padding: 0; 
             display: flex; 
             flex-direction: column; 
             align-items: center; 
-            min-height: 100vh;
-            -webkit-font-smoothing: antialiased; /* Делает шрифт еще тоньше на iPhone */
-        }
-        
-        .logo { 
-            font-family: 'Playfair Display', serif; 
-            font-size: 26px; 
-            letter-spacing: 14px; 
-            color: var(--gold); 
-            margin: 40px 0 50px; 
-            text-transform: uppercase; 
-            font-weight: 300; 
+            min-height: 100vh; 
+            -webkit-font-smoothing: antialiased; 
+            overflow-x: hidden;
         }
 
-        /* Золотая рамка как на скрине */
+        /* Блок логотипа с гриффоном */
+        .logo-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 50px 0 45px;
+        }
+
+        .gryphon-svg {
+            width: 70px; /* Уменьшенный размер для изящества */
+            height: auto;
+            margin-bottom: 15px;
+            fill: var(--gold);
+            opacity: 0.9;
+        }
+
+        .logo-text { 
+            font-family: 'Playfair Display', serif; 
+            font-size: 24px; 
+            letter-spacing: 14px; 
+            color: var(--gold); 
+            text-transform: uppercase; 
+            font-weight: 400; /* В сочетании с Playfair дает идеальную нить */
+            margin-left: 14px; /* Компенсация letter-spacing для центровки */
+        }
+
+        /* Рамка баланса на графитовом фоне */
         .balance-frame {
-            width: 100%;
-            max-width: 350px;
-            border: 1px solid rgba(197, 160, 89, 0.2);
-            background: linear-gradient(180deg, #0f0f0f 0%, #070707 100%);
-            padding: 55px 20px;
+            width: 90%;
+            max-width: 360px;
+            border: 1px solid rgba(197, 160, 89, 0.15);
+            background: linear-gradient(180deg, #161a1d 0%, #0f1113 100%);
+            padding: 50px 20px;
             text-align: center;
             box-sizing: border-box;
-            margin-bottom: 55px;
+            margin-bottom: 45px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
         }
 
         .label { 
             font-size: 9px; 
             letter-spacing: 5px; 
-            color: #444; 
+            color: #555; 
             text-transform: uppercase; 
             margin-bottom: 30px; 
-            font-weight: 100; 
+            font-weight: 200; 
         }
         
-        /* Баланс: Сверхтонкий Playfair Display */
         .balance-val { 
             font-family: 'Playfair Display', serif; 
-            font-size: 48px; 
+            font-size: 46px; 
             color: var(--gold); 
             margin-bottom: 45px; 
-            font-weight: 400; /* ИСПРАВЛЕНО: Максимально тонкий */
+            font-weight: 400; 
             letter-spacing: -1px;
+            -webkit-font-smoothing: antialiased;
         }
         
-        /* Рубль: Тонкий и Золотой */
         .currency { 
             color: var(--gold); 
-            font-size: 32px; 
-            margin-left: 10px; 
-            font-weight: 200; /* ИСПРАВЛЕНО: Сверхтонкий */
+            font-size: 30px; 
+            margin-left: 8px; 
+            font-weight: 100; 
+            font-family: 'Montserrat', sans-serif;
         }
 
         .btn-action {
             display: inline-block;
             border: 1px solid var(--gold);
-            padding: 15px 45px;
+            padding: 14px 45px;
             color: var(--gold);
             text-decoration: none;
             font-size: 10px;
             letter-spacing: 7px;
             text-transform: uppercase;
             font-weight: 200;
+            transition: all 0.3s ease;
         }
 
-        .section-box { width: 100%; max-width: 350px; margin-bottom: 45px; }
+        /* Секции контента */
+        .section-box { width: 90%; max-width: 360px; margin-bottom: 35px; }
         .section-title { 
             font-size: 9px; 
             letter-spacing: 4px; 
-            color: #333; 
+            color: #444; 
             text-transform: uppercase; 
             margin-bottom: 25px; 
-            border-bottom: 1px solid #111; 
+            border-bottom: 1px solid rgba(255,255,255,0.03); 
             padding-bottom: 12px; 
         }
         
@@ -100,37 +126,42 @@
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
-            padding: 20px 0; 
-            border-bottom: 1px solid #0f0f0f; 
+            padding: 18px 0; 
+            border-bottom: 1px solid rgba(255,255,255,0.02); 
         }
         
-        .name { 
-            font-size: 11px; 
-            letter-spacing: 2px; 
-            color: var(--gold); 
-            font-weight: 300; 
-        }
+        .name { font-size: 11px; letter-spacing: 2px; color: var(--gold); font-weight: 300; }
         
-        /* Цены: Серые и тонкие */
         .price-text { 
             font-size: 14px; 
-            color: #777; /* ИСПРАВЛЕНО: Цвет как на скрине */
+            color: #888; 
             font-weight: 200; 
+            font-family: 'Montserrat', sans-serif;
         }
         
         .change { font-size: 10px; margin-left: 8px; font-weight: 500; }
         .up { color: #2ecc71; } .down { color: #e74c3c; }
 
-        /* Активность */
-        .activity-row { display: flex; font-size: 11px; padding: 18px 0; border-bottom: 1px solid #0f0f0f; }
-        .time { color: #222; width: 65px; }
+        .activity-row { 
+            display: flex; 
+            font-size: 11px; 
+            padding: 18px 0; 
+            border-bottom: 1px solid rgba(255,255,255,0.02); 
+        }
+        .time { color: #333; width: 65px; font-weight: 200; }
         .desc { flex: 1; text-align: right; color: var(--gold); font-weight: 200; }
         .desc b { color: #fff; font-weight: 300; }
     </style>
 </head>
 <body>
 
-    <div class="logo">SIGNET</div>
+    <div class="logo-section">
+        <svg class="gryphon-svg" viewBox="0 0 100 60" xmlns="http://www.w3.org/2000/svg">
+            <path d="M50 5 L55 15 L75 15 L60 25 L65 45 L50 35 L35 45 L40 25 L25 15 L45 15 Z" fill="none" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M15 20 Q30 5 50 20 Q70 5 85 20 M20 25 Q35 15 50 25 Q65 15 80 25" fill="none" stroke="currentColor" stroke-width="1.2"/>
+        </svg>
+        <div class="logo-text">SIGNET</div>
+    </div>
 
     <div class="balance-frame">
         <div class="label">Current Balance</div>
@@ -164,9 +195,10 @@
                 });
                 const d = await r.json();
                 
-                // Золотой рубль и тонкие цифры
+                // Отображение баланса
                 document.getElementById('balance').innerHTML = `${d.balance} <span class="currency">₽</span>`;
                 
+                // Рендеринг портфеля
                 let h = '';
                 d.portfolio.forEach(i => {
                     const c = i.change.startsWith('+') ? 'up' : 'down';
@@ -178,7 +210,7 @@
                           </div>`;
                 });
                 document.getElementById('portfolio').innerHTML = h;
-            } catch (e) { console.log("Reloading..."); }
+            } catch (e) { console.log("Связь с сервером..."); }
         }
         sync();
         setInterval(sync, 5000);
