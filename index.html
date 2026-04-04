@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>SIGNET — премиальный кошелёк</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- EB Garamond: тонкие засечки, банковский стиль -->
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -14,7 +15,8 @@
 
         body {
             background-color: #0A0A0A;
-            font-family: 'Cinzel', 'Times New Roman', serif;
+            font-family: 'EB Garamond', 'Times New Roman', serif;
+            font-weight: 400;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -26,18 +28,18 @@
             max-width: 480px;
             width: 100%;
             background: #111111;
-            border-radius: 32px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(212, 175, 55, 0.2);
+            border-radius: 28px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(212, 175, 55, 0.25);
             padding: 28px 20px 36px;
         }
 
-        /* Заголовок и грифон */
+        /* Заголовок */
         .header {
             display: flex;
             align-items: baseline;
             justify-content: space-between;
-            margin-bottom: 24px;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            margin-bottom: 28px;
+            border-bottom: 0.5px solid rgba(212, 175, 55, 0.3);
             padding-bottom: 12px;
         }
         .logo-area {
@@ -46,20 +48,24 @@
             gap: 8px;
         }
         .griffin-icon svg {
-            width: 32px;
-            height: 32px;
+            width: 30px;
+            height: 30px;
+            opacity: 0.9;
         }
         .app-name {
             font-size: 22px;
-            font-weight: 600;
-            letter-spacing: 4px;
+            font-weight: 500;
+            letter-spacing: 5px;
             color: #D4AF37;
+            text-transform: uppercase;
+            font-family: 'EB Garamond', serif;
         }
         .close-btn {
             color: #D4AF37;
             font-size: 20px;
             cursor: pointer;
-            opacity: 0.7;
+            opacity: 0.6;
+            font-weight: 300;
         }
 
         /* Баланс */
@@ -68,101 +74,112 @@
             margin-bottom: 28px;
         }
         .balance-label {
-            font-size: 11px;
-            letter-spacing: 2px;
+            font-size: 10px;
+            letter-spacing: 3px;
             color: rgba(212, 175, 55, 0.6);
             margin-bottom: 6px;
+            font-weight: 400;
+            text-transform: uppercase;
         }
         .balance-amount {
-            font-size: 42px;
-            font-weight: 700;
+            font-size: 44px;
+            font-weight: 500;
             color: #D4AF37;
+            letter-spacing: 2px;
+            font-family: 'EB Garamond', serif;
         }
         .balance-currency {
             font-size: 18px;
-            font-weight: 500;
-            margin-left: 4px;
+            font-weight: 400;
+            margin-left: 6px;
         }
 
         /* Кнопки ввод/вывод */
         .action-row {
             display: flex;
             justify-content: center;
-            gap: 24px;
+            gap: 28px;
             margin-bottom: 36px;
         }
         .action-btn {
             background: transparent;
-            border: 1.5px solid #D4AF37;
+            border: 1px solid rgba(212, 175, 55, 0.7);
             padding: 8px 28px;
-            font-family: 'Cinzel', serif;
-            font-size: 16px;
-            font-weight: 600;
-            letter-spacing: 2px;
+            font-family: 'EB Garamond', serif;
+            font-size: 15px;
+            font-weight: 500;
+            letter-spacing: 3px;
             color: #D4AF37;
             text-transform: uppercase;
             border-radius: 40px;
             cursor: pointer;
             transition: 0.2s;
-            background: rgba(0,0,0,0.4);
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(2px);
         }
         .action-btn:hover {
-            background: rgba(212,175,55,0.15);
+            background: rgba(212,175,55,0.1);
             border-color: #E5C158;
         }
 
         /* Портфолио */
         .portfolio-title {
-            font-size: 14px;
-            letter-spacing: 3px;
+            font-size: 12px;
+            letter-spacing: 4px;
             color: #D4AF37;
-            margin-bottom: 12px;
-            border-left: 2px solid #D4AF37;
+            margin-bottom: 14px;
+            border-left: 1px solid #D4AF37;
             padding-left: 10px;
+            font-weight: 500;
+            text-transform: uppercase;
         }
         .assets-grid {
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            margin-bottom: 32px;
+            gap: 14px;
+            margin-bottom: 34px;
         }
         .asset-item {
             display: flex;
             justify-content: space-between;
             align-items: baseline;
-            border-bottom: 1px dashed rgba(212,175,55,0.2);
+            border-bottom: 0.5px dashed rgba(212,175,55,0.2);
             padding-bottom: 8px;
         }
         .asset-name {
             font-weight: 500;
             color: #D4AF37;
             font-size: 15px;
+            letter-spacing: 1px;
         }
         .asset-value {
-            font-weight: 600;
+            font-weight: 500;
             color: #E8D18C;
             font-size: 15px;
+            letter-spacing: 0.5px;
         }
         .asset-change {
-            font-size: 12px;
-            margin-left: 8px;
-            font-weight: 500;
+            font-size: 11px;
+            margin-left: 10px;
+            font-weight: 400;
         }
         .positive {
-            color: #2ecc71;
+            color: #b3d9b0;
         }
         .negative {
-            color: #e74c3c;
+            color: #e0afa0;
         }
 
         /* Лента активности */
         .activity-title {
-            font-size: 14px;
-            letter-spacing: 3px;
+            font-size: 12px;
+            letter-spacing: 4px;
             color: #D4AF37;
-            margin-bottom: 12px;
-            border-left: 2px solid #D4AF37;
+            margin-bottom: 14px;
+            border-left: 1px solid #D4AF37;
             padding-left: 10px;
+            font-weight: 500;
+            text-transform: uppercase;
         }
         .activity-list {
             display: flex;
@@ -172,25 +189,30 @@
         .activity-item {
             display: flex;
             justify-content: space-between;
-            font-size: 12px;
+            font-size: 11px;
             color: #bbaa77;
-            border-bottom: 1px dotted rgba(212,175,55,0.15);
-            padding-bottom: 6px;
+            border-bottom: 0.5px dotted rgba(212,175,55,0.15);
+            padding-bottom: 7px;
+            font-weight: 400;
+            letter-spacing: 0.3px;
         }
         .activity-time {
             font-weight: 500;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.8px;
         }
         .activity-desc {
             text-align: right;
             max-width: 70%;
+            font-style: normal;
         }
 
         .footer-note {
-            margin-top: 28px;
+            margin-top: 32px;
             text-align: center;
-            font-size: 8px;
-            color: rgba(212,175,55,0.3);
+            font-size: 7px;
+            letter-spacing: 2px;
+            color: rgba(212,175,55,0.25);
+            text-transform: uppercase;
         }
     </style>
 </head>
@@ -199,8 +221,8 @@
     <div class="header">
         <div class="logo-area">
             <div class="griffin-icon">
-                <svg viewBox="0 0 40 40" width="32" height="32">
-                    <path d="M20 5 L28 15 L24 25 L32 30 L28 38 L20 34 L12 38 L8 30 L16 25 L12 15 L20 5Z" fill="#C9A03D" stroke="#D4AF37" stroke-width="0.8"/>
+                <svg viewBox="0 0 40 40" width="30" height="30">
+                    <path d="M20 5 L28 15 L24 25 L32 30 L28 38 L20 34 L12 38 L8 30 L16 25 L12 15 L20 5Z" fill="#C9A03D" stroke="#D4AF37" stroke-width="0.6"/>
                     <circle cx="20" cy="18" r="3" fill="#111"/>
                 </svg>
             </div>
@@ -221,7 +243,6 @@
 
     <div class="portfolio-title">PORTFOLIO</div>
     <div class="assets-grid" id="assetsGrid">
-        <!-- Данные будут заполнены из API -->
         <div class="asset-item"><span class="asset-name">GOLD</span><span><span class="asset-value">—</span><span class="asset-change"></span></span></div>
         <div class="asset-item"><span class="asset-name">BRENT</span><span><span class="asset-value">—</span><span class="asset-change"></span></span></div>
         <div class="asset-item"><span class="asset-name">BTC</span><span><span class="asset-value">—</span><span class="asset-change"></span></span></div>
@@ -236,18 +257,14 @@
 </div>
 
 <script>
-    // Базовый URL бэкенда (потом замените на реальный)
     const API_BASE = "http://localhost:8000";
-    // Для теста используем demo telegram_id, в реальном WebApp получите из Telegram.WebApp.initDataUnsafe.user.id
     const TELEGRAM_ID = "demo_user_123";
 
-    // Функция загрузки портфеля (цены + изменения)
     async function loadPortfolio() {
         try {
             const resp = await fetch(`${API_BASE}/portfolio`);
             if (!resp.ok) throw new Error();
             const data = await resp.json();
-            // data = { "GOLD": {price, change_percent}, "BRENT": ..., "BTC": ..., "DXY": ... }
             const assets = ["GOLD", "BRENT", "BTC", "DXY"];
             const container = document.getElementById("assetsGrid");
             const items = container.querySelectorAll(".asset-item");
@@ -259,21 +276,18 @@
                     const change = info.change_percent.toFixed(2);
                     const changeClass = change >= 0 ? "positive" : "negative";
                     const sign = change >= 0 ? "+" : "";
-                    items[i].querySelector(".asset-value").innerText = `${price} ${sym === "DXY" ? "" : "$"}`;
+                    items[i].querySelector(".asset-value").innerHTML = `${price} ${sym === "DXY" ? "" : "$"}`;
                     items[i].querySelector(".asset-change").innerHTML = `<span class="${changeClass}">${sign}${change}%</span>`;
                 }
             }
-        } catch(e) {
-            console.warn("Ошибка загрузки портфеля", e);
-        }
+        } catch(e) { console.warn(e); }
     }
 
-    // Функция загрузки активности
     async function loadActivity() {
         try {
             const resp = await fetch(`${API_BASE}/activity/${TELEGRAM_ID}`);
             if (!resp.ok) throw new Error();
-            const activities = await resp.json(); // [{time: "21:40", description: "Профит по BRENT +1.2%"}, ...]
+            const activities = await resp.json();
             const container = document.getElementById("activityList");
             if (activities.length === 0) {
                 container.innerHTML = '<div class="activity-item"><span class="activity-time">—</span><span class="activity-desc">Нет активности</span></div>';
@@ -285,12 +299,9 @@
                     <span class="activity-desc">${act.description}</span>
                 </div>
             `).join('');
-        } catch(e) {
-            console.warn("Ошибка загрузки активности", e);
-        }
+        } catch(e) { console.warn(e); }
     }
 
-    // Загрузка баланса
     async function loadBalance() {
         try {
             const resp = await fetch(`${API_BASE}/balance/${TELEGRAM_ID}`);
@@ -304,15 +315,13 @@
         } catch(e) {}
     }
 
-    // Обработчики кнопок
-    document.getElementById("depositBtn").onclick = () => alert("Пополнение будет доступно в ближайшее время");
-    document.getElementById("withdrawBtn").onclick = () => alert("Вывод средств через защищённый канал");
+    document.getElementById("depositBtn").onclick = () => alert("Пополнение через защищённый канал");
+    document.getElementById("withdrawBtn").onclick = () => alert("Вывод средств");
 
-    // Инициализация
     loadPortfolio();
     loadActivity();
     loadBalance();
-    setInterval(() => { loadPortfolio(); }, 60000); // обновление цен раз в минуту
+    setInterval(loadPortfolio, 60000);
 </script>
 </body>
 </html>
