@@ -4,159 +4,160 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>SIGNET</title>
-    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: #0D0D0D; /* Глубокий графитовый как на фото */
+            /* Фоновое изображение со скриншота */
+            background: url('https://w.forfun.com/fetch/88/88788f0412803b9b4624326570973307.jpeg') no-repeat center center fixed;
+            background-size: cover;
             font-family: 'Inter', sans-serif;
-            color: #C9A03D;
+            color: #E2C28B; /* Мягкое золото */
+            height: 100vh;
             display: flex;
             justify-content: center;
-            min-height: 100vh;
-            -webkit-font-smoothing: antialiased;
+            align-items: flex-end; /* Контент прижат к низу, как на мобильных интерфейсах */
         }
 
-        .app {
+        /* Затемнение фона для читаемости */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.8) 100%);
+            z-index: 1;
+        }
+
+        .app-container {
+            position: relative;
+            z-index: 2;
             width: 100%;
             max-width: 440px;
-            padding: 20px 20px;
+            padding: 30px 20px;
+            /* Эффект матового стекла для блоков */
+            background: rgba(10, 10, 10, 0.4);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-top: 1px solid rgba(226, 194, 139, 0.2);
+            border-radius: 40px 40px 0 0;
         }
 
-        /* Заголовок SIGNET сверху */
-        .top-logo {
-            text-align: center;
+        .header-brand {
             font-family: 'EB Garamond', serif;
-            font-size: 24px;
-            letter-spacing: 0.3em;
-            margin: 20px 0 40px;
-            font-weight: 400;
-            color: #C9A03D;
-        }
-
-        /* Центральный блок с рамкой */
-        .balance-card {
-            border: 1px solid rgba(201, 160, 61, 0.2);
-            padding: 60px 20px;
             text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .label {
-            font-size: 11px;
-            letter-spacing: 0.2em;
-            opacity: 0.5;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-        }
-
-        .amount {
-            font-family: 'EB Garamond', serif;
-            font-size: 52px;
-            color: #C9A03D;
+            font-size: 26px;
+            letter-spacing: 0.4em;
             margin-bottom: 40px;
-            font-weight: 400;
-        }
-
-        .btn-row {
-            border-top: 1px solid rgba(201, 160, 61, 0.2);
-            padding-top: 25px;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            font-size: 14px;
-            letter-spacing: 0.3em;
-            font-weight: 300;
-        }
-
-        /* Списки PORTFOLIO и ACTIVITY */
-        .section-header {
-            font-size: 11px;
-            letter-spacing: 0.3em;
-            margin: 40px 0 20px;
-            opacity: 0.5;
             text-transform: uppercase;
         }
 
-        .data-row {
+        .balance-block {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .balance-label {
+            font-size: 10px;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            opacity: 0.7;
+            margin-bottom: 10px;
+        }
+
+        .balance-value {
+            font-family: 'EB Garamond', serif;
+            font-size: 54px;
+            font-weight: 400;
+        }
+
+        .action-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1px;
+            background: rgba(226, 194, 139, 0.2);
+            margin-bottom: 40px;
+            border: 1px solid rgba(226, 194, 139, 0.2);
+        }
+
+        .action-item {
+            background: rgba(10, 10, 10, 0.5);
+            padding: 15px;
+            text-align: center;
+            font-size: 12px;
+            letter-spacing: 0.2em;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .action-item:active {
+            background: rgba(226, 194, 139, 0.1);
+        }
+
+        .section-header {
+            font-family: 'EB Garamond', serif;
+            font-style: italic;
+            font-size: 18px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(226, 194, 139, 0.1);
+            padding-bottom: 5px;
+        }
+
+        .asset-row {
             display: flex;
             justify-content: space-between;
-            padding: 18px 0;
-            border-bottom: 0.5px solid rgba(201, 160, 61, 0.15);
+            padding: 12px 0;
             font-size: 14px;
-            font-weight: 300;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
-        .asset-ticker { letter-spacing: 0.1em; }
-        .asset-price { font-family: 'Inter', sans-serif; }
-        .percent { font-size: 11px; margin-left: 10px; }
-        
-        .pos { color: #8BC34A; opacity: 0.8; }
-        .neg { color: #E57373; opacity: 0.8; }
+        .ticker { font-weight: 600; letter-spacing: 1px; }
+        .price { font-family: 'Inter', sans-serif; }
+        .up { color: #A4C639; }
+        .down { color: #E57373; }
 
-        .act-time { opacity: 0.4; width: 60px; }
-        .act-text { flex: 1; text-align: right; color: #C9A03D; }
-
+        .footer-info {
+            text-align: center;
+            font-size: 9px;
+            margin-top: 30px;
+            opacity: 0.4;
+            letter-spacing: 2px;
+        }
     </style>
 </head>
 <body>
 
-<div class="app">
-    <div class="top-logo">S I G N E T</div>
+<div class="app-container">
+    <div class="header-brand">SIGNET</div>
 
-    <div class="balance-card">
-        <div class="label">Current Balance</div>
-        <div class="amount">12,500.50 ₽</div>
-        <div class="btn-row">
-            <span>ВВОД</span>
-            <span style="opacity: 0.2">/</span>
-            <span>ВЫВОД</span>
+    <div class="balance-block">
+        <div class="balance-label">Available Assets</div>
+        <div class="balance-value">12,500.50 ₽</div>
+    </div>
+
+    <div class="action-grid">
+        <div class="action-item" onclick="alert('Deposit')">DEPOSIT</div>
+        <div class="action-item" onclick="alert('Withdraw')">WITHDRAW</div>
+    </div>
+
+    <div class="section-header">Market Snapshot</div>
+    <div class="asset-list">
+        <div class="asset-row">
+            <span class="ticker">GOLD</span>
+            <span class="price">2,150.40 <span class="up">+0.4%</span></span>
+        </div>
+        <div class="asset-row">
+            <span class="ticker">BRENT</span>
+            <span class="price">82.30 <span class="down">-1.1%</span></span>
+        </div>
+        <div class="asset-row">
+            <span class="ticker">BTC</span>
+            <span class="price">67,200.15 <span class="up">+2.3%</span></span>
         </div>
     </div>
 
-    <div class="section-header">Portfolio</div>
-    <div class="data-row">
-        <span class="asset-ticker">GOLD</span>
-        <span><span class="asset-price">2,150.40</span><span class="percent pos">+0.45%</span></span>
-    </div>
-    <div class="data-row">
-        <span class="asset-ticker">BRENT</span>
-        <span><span class="asset-price">82.30</span><span class="percent neg">-1.10%</span></span>
-    </div>
-    <div class="data-row">
-        <span class="asset-ticker">BTC</span>
-        <span><span class="asset-price">67,200.15</span><span class="percent pos">+2.30%</span></span>
-    </div>
-    <div class="data-row">
-        <span class="asset-ticker">DXY</span>
-        <span><span class="asset-price">103.85</span><span class="percent pos">+0.12%</span></span>
-    </div>
-
-    <div class="section-header">Latest Activity</div>
-    <div class="data-row">
-        <span class="act-time">21:40</span>
-        <span class="act-text">Профит по BRENT +1.2%</span>
-    </div>
-    <div class="data-row">
-        <span class="act-time">18:15</span>
-        <span class="act-text">SMC: Слом структуры DXY</span>
-    </div>
+    <div class="footer-info">EST. 2026 • TRADERS CLUB</div>
 </div>
-
-<script>
-    // Твоя ссылка из терминала (обновляй её после перезапуска туннеля)
-    const API_URL = "https://6e36be656d2a85.lhr.life"; 
-
-    async function refresh() {
-        try {
-            const r = await fetch(`${API_URL}/portfolio`);
-            const d = await r.json();
-            // Здесь будет логика авто-обновления, если нужно
-        } catch(e) {}
-    }
-    setInterval(refresh, 30000);
-</script>
 
 </body>
 </html>
