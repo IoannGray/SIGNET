@@ -155,42 +155,38 @@
 </div>
 
 <script>
-    // Используем твою ссылку из нижнего окна терминала
+    // 1. УБЕДИСЬ ЧТО ЭТА ССЫЛКА СОВПАДАЕТ С ТВОИМ ТЕРМИНАЛОМ (НИЖНЕЕ ОКНО)
     const API_URL = "https://6e36be656d2a85.lhr.life"; 
 
-    async function updateMarketData() {
+    async function updateMarket() {
         try {
-            const response = await fetch(`${API_URL}/portfolio`);
+            const response = await fetch(API_URL + "/portfolio");
             const data = await response.json();
             
-            // Находим контейнер, где лежат строки с активами
-            const container = document.querySelector('.balance-card').nextElementSibling.nextElementSibling;
-            
-            // Очищаем и рисуем новые данные с живыми ценами
-            let html = '';
+            const list = document.getElementById('market-list');
+            if (!list) return; // Если не нашел ID, ничего не делаем
+
+            let newHtml = "";
             data.assets.forEach(asset => {
-                const isPositive = asset.change.includes('+');
-                html += `
+                const isPos = asset.change.includes('+');
+                newHtml += `
                     <div class="row">
                         <span class="ticker">${asset.ticker}</span>
                         <span>
-                            <span class="price">${asset.price.toLocaleString(undefined, {minimumFractionDigits: 2})}</span>
-                            <span class="${isPositive ? 'pos' : 'neg'}">${asset.change}</span>
+                            <span class="price">${asset.price.toFixed(2)}</span>
+                            <span class="${isPos ? 'pos' : 'neg'}">${asset.change}</span>
                         </span>
                     </div>
                 `;
             });
-            container.innerHTML = html;
-
-        } catch (e) {
-            console.error("Connection to server failed. Check if terminal is open.");
+            list.innerHTML = newHtml;
+            console.log("Данные обновлены");
+        } catch (error) {
+            console.error("Ошибка связи с сервером:", error);
         }
     }
 
-    // Обновляем данные каждые 3 секунды для эффекта "живого" рынка
-    updateMarketData();
-    setInterval(updateMarketData, 3000);
+    // Обновляем раз в 3 секунды
+    setInterval(updateMarket, 3000);
+    updateMarket(); // И один раз при запуске
 </script>
-
-</body>
-</html>
