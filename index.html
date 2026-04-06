@@ -3,163 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>SIGNET — премиальный кошелёк</title>
-    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>SIGNET</title>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: #080808;
+            background-color: #0D0D0D; /* Глубокий графитовый как на фото */
             font-family: 'Inter', sans-serif;
             color: #C9A03D;
             display: flex;
             justify-content: center;
             min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
         }
 
         .app {
             width: 100%;
             max-width: 440px;
-            padding: 40px 24px;
+            padding: 20px 20px;
         }
 
-        /* Логотип */
-        .brand-header {
+        /* Заголовок SIGNET сверху */
+        .top-logo {
             text-align: center;
             font-family: 'EB Garamond', serif;
-            font-size: 28px;
-            letter-spacing: 8px;
-            margin-bottom: 40px;
+            font-size: 24px;
+            letter-spacing: 0.3em;
+            margin: 20px 0 40px;
             font-weight: 400;
+            color: #C9A03D;
         }
 
-        /* Главная карточка баланса */
-        .main-card {
-            border: 1px solid rgba(201, 160, 61, 0.3);
-            padding: 40px 20px;
+        /* Центральный блок с рамкой */
+        .balance-card {
+            border: 1px solid rgba(201, 160, 61, 0.2);
+            padding: 60px 20px;
             text-align: center;
-            margin-bottom: 40px;
-            background: rgba(255, 255, 255, 0.02);
+            margin-bottom: 60px;
         }
 
         .label {
-            font-size: 10px;
-            letter-spacing: 3px;
-            opacity: 0.6;
-            margin-bottom: 16px;
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            opacity: 0.5;
+            margin-bottom: 20px;
             text-transform: uppercase;
         }
 
         .amount {
             font-family: 'EB Garamond', serif;
-            font-size: 48px;
-            margin-bottom: 30px;
+            font-size: 52px;
             color: #C9A03D;
+            margin-bottom: 40px;
+            font-weight: 400;
         }
 
-        .actions {
-            border-top: 1px solid rgba(201, 160, 61, 0.3);
-            padding-top: 20px;
+        .btn-row {
+            border-top: 1px solid rgba(201, 160, 61, 0.2);
+            padding-top: 25px;
             display: flex;
             justify-content: center;
-            gap: 15px;
-            font-size: 13px;
-            letter-spacing: 4px;
+            gap: 20px;
+            font-size: 14px;
+            letter-spacing: 0.3em;
+            font-weight: 300;
         }
 
-        .action-link { cursor: pointer; transition: 0.3s; }
-        .action-link:hover { opacity: 0.7; }
-
-        /* Списки активов и активности */
-        .section-title {
-            font-size: 10px;
-            letter-spacing: 4px;
-            margin-bottom: 24px;
-            opacity: 0.6;
+        /* Списки PORTFOLIO и ACTIVITY */
+        .section-header {
+            font-size: 11px;
+            letter-spacing: 0.3em;
+            margin: 40px 0 20px;
+            opacity: 0.5;
             text-transform: uppercase;
         }
 
-        .item-row {
+        .data-row {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding: 14px 0;
-            border-bottom: 1px solid rgba(201, 160, 61, 0.1);
+            padding: 18px 0;
+            border-bottom: 0.5px solid rgba(201, 160, 61, 0.15);
             font-size: 14px;
+            font-weight: 300;
         }
 
-        .item-name { letter-spacing: 1px; }
-        .item-value { font-weight: 400; }
-        .change { font-size: 11px; margin-left: 8px; }
-        .positive { color: #8BC34A; }
-        .negative { color: #E57373; }
+        .asset-ticker { letter-spacing: 0.1em; }
+        .asset-price { font-family: 'Inter', sans-serif; }
+        .percent { font-size: 11px; margin-left: 10px; }
+        
+        .pos { color: #8BC34A; opacity: 0.8; }
+        .neg { color: #E57373; opacity: 0.8; }
 
-        .activity-desc { color: #A78E5A; font-size: 13px; }
-        .time { opacity: 0.5; font-size: 12px; }
+        .act-time { opacity: 0.4; width: 60px; }
+        .act-text { flex: 1; text-align: right; color: #C9A03D; }
+
     </style>
 </head>
 <body>
 
 <div class="app">
-    <div class="brand-header">SIGNET</div>
+    <div class="top-logo">S I G N E T</div>
 
-    <div class="main-card">
+    <div class="balance-card">
         <div class="label">Current Balance</div>
         <div class="amount">12,500.50 ₽</div>
-        <div class="actions">
-            <span class="action-link">ВВОД</span>
-            <span style="opacity: 0.3">/</span>
-            <span class="action-link">ВЫВОД</span>
+        <div class="btn-row">
+            <span>ВВОД</span>
+            <span style="opacity: 0.2">/</span>
+            <span>ВЫВОД</span>
         </div>
     </div>
 
-    <div class="section-title">Portfolio</div>
-    <div id="assetsGrid">
-        <div class="item-row">
-            <span class="item-name">GOLD</span>
-            <span><span class="item-value">2,150.40</span><span class="change positive">+0.45%</span></span>
-        </div>
-        <div class="item-row">
-            <span class="item-name">BRENT</span>
-            <span><span class="item-value">82.30</span><span class="change negative">-1.10%</span></span>
-        </div>
-        <div class="item-row">
-            <span class="item-name">BTC</span>
-            <span><span class="item-value">67,200.15</span><span class="change positive">+2.30%</span></span>
-        </div>
-        <div class="item-row">
-            <span class="item-name">DXY</span>
-            <span><span class="item-value">103.85</span><span class="change positive">+0.12%</span></span>
-        </div>
+    <div class="section-header">Portfolio</div>
+    <div class="data-row">
+        <span class="asset-ticker">GOLD</span>
+        <span><span class="asset-price">2,150.40</span><span class="percent pos">+0.45%</span></span>
+    </div>
+    <div class="data-row">
+        <span class="asset-ticker">BRENT</span>
+        <span><span class="asset-price">82.30</span><span class="percent neg">-1.10%</span></span>
+    </div>
+    <div class="data-row">
+        <span class="asset-ticker">BTC</span>
+        <span><span class="asset-price">67,200.15</span><span class="percent pos">+2.30%</span></span>
+    </div>
+    <div class="data-row">
+        <span class="asset-ticker">DXY</span>
+        <span><span class="asset-price">103.85</span><span class="percent pos">+0.12%</span></span>
     </div>
 
-    <div class="section-title" style="margin-top: 40px;">Latest Activity</div>
-    <div id="activityList">
-        <div class="item-row">
-            <span class="time">21:40</span>
-            <span class="activity-desc">Профит по BRENT +1.2%</span>
-        </div>
-        <div class="item-row">
-            <span class="time">18:15</span>
-            <span class="activity-desc">SMC: Слом структуры DXY</span>
-        </div>
+    <div class="section-header">Latest Activity</div>
+    <div class="data-row">
+        <span class="act-time">21:40</span>
+        <span class="act-text">Профит по BRENT +1.2%</span>
+    </div>
+    <div class="data-row">
+        <span class="act-time">18:15</span>
+        <span class="act-text">SMC: Слом структуры DXY</span>
     </div>
 </div>
 
 <script>
-    // Не забудь заменить на свой адрес .lhr.life из терминала!
-    const API_BASE = "https://6e36be656d2a85.lhr.life"; 
-    const TELEGRAM_ID = "demo_user_123";
+    // Твоя ссылка из терминала (обновляй её после перезапуска туннеля)
+    const API_URL = "https://6e36be656d2a85.lhr.life"; 
 
-    async function updateData() {
+    async function refresh() {
         try {
-            const res = await fetch(`${API_BASE}/portfolio`);
-            const data = await res.json();
-            // Тут логика обновления цифр (как в прошлом коде)
+            const r = await fetch(`${API_URL}/portfolio`);
+            const d = await r.json();
+            // Здесь будет логика авто-обновления, если нужно
         } catch(e) {}
     }
-
-    setInterval(updateData, 30000);
+    setInterval(refresh, 30000);
 </script>
 
 </body>
