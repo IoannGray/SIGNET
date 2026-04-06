@@ -3,36 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>SIGNET — Private Banking</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>SIGNET — Private Client</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: #3D3D3D; /* Тот самый серый графит с твоего скриншота */
+            background-color: #1A1A1A; /* Глубокий графит */
             font-family: 'Inter', sans-serif;
-            color: #E2C28B;
+            color: #C9A03D; /* Благородное золото */
             display: flex;
             justify-content: center;
             min-height: 100vh;
-            padding-top: 50px;
+            -webkit-font-smoothing: antialiased;
         }
 
-        .app-container {
+        .app {
             width: 100%;
-            max-width: 400px;
-            padding: 20px;
-            text-align: center;
+            max-width: 440px;
+            padding: 40px 25px;
         }
 
-        /* Логотип в стиле банковского клише */
-        .brand-logo {
+        /* Логотип — классическая антиква */
+        .header {
+            text-align: center;
             font-family: 'Playfair Display', serif;
             font-size: 32px;
-            letter-spacing: 0.5em;
-            text-transform: uppercase;
-            margin-bottom: 60px;
+            letter-spacing: 0.4em;
+            margin-bottom: 50px;
             font-weight: 400;
+            text-transform: uppercase;
+        }
+
+        /* Блок баланса как на банковском чеке */
+        .card-balance {
+            border: 1px solid rgba(201, 160, 61, 0.25);
+            padding: 50px 20px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.02);
+            margin-bottom: 40px;
         }
 
         .label {
@@ -40,113 +49,117 @@
             letter-spacing: 0.3em;
             text-transform: uppercase;
             opacity: 0.6;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
-        /* Главная сумма - шрифт как на чеке */
-        .main-balance {
+        .main-amount {
             font-family: 'Playfair Display', serif;
             font-size: 52px;
+            color: #C9A03D;
             font-weight: 400;
-            margin-bottom: 50px;
         }
 
-        /* Кнопки ВВОД / ВЫВОД с тонкими рамками */
-        .btn-group {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            border: 0.5px solid rgba(226, 194, 139, 0.4);
-            margin-bottom: 60px;
+        /* Кнопки в ряд с разделителем */
+        .btn-row {
+            display: flex;
+            border-top: 1px solid rgba(201, 160, 61, 0.25);
+            margin-top: 40px;
         }
 
-        .btn-item {
-            padding: 18px;
+        .btn {
+            flex: 1;
+            padding: 20px;
             font-size: 12px;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            border-right: 0.5px solid rgba(226, 194, 139, 0.4);
+            letter-spacing: 0.3em;
+            text-align: center;
             cursor: pointer;
+            text-transform: uppercase;
+            transition: 0.3s;
         }
 
-        .btn-item:last-child { border-right: none; }
+        .btn:first-child { border-right: 1px solid rgba(201, 160, 61, 0.25); }
+        .btn:hover { background: rgba(201, 160, 61, 0.05); }
 
-        /* Списки котировок */
-        .section-title {
+        /* Секции рынка и активности */
+        .section-name {
             font-family: 'Playfair Display', serif;
             font-style: italic;
-            text-align: left;
             font-size: 18px;
-            margin-bottom: 20px;
-            border-bottom: 0.5px solid rgba(226, 194, 139, 0.2);
-            padding-bottom: 10px;
+            margin: 40px 0 20px;
+            border-bottom: 1px solid rgba(201, 160, 61, 0.15);
+            padding-bottom: 8px;
         }
 
-        .data-row {
+        .data-line {
             display: flex;
             justify-content: space-between;
             padding: 15px 0;
             font-size: 14px;
-            border-bottom: 0.5px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
         }
 
-        .ticker { font-weight: 600; letter-spacing: 0.1em; }
-        .price-info { font-family: 'Inter', sans-serif; }
+        .ticker { font-weight: 600; letter-spacing: 1px; }
+        .num { font-family: 'Inter', sans-serif; }
         
         .up { color: #A4C639; }
         .down { color: #E57373; }
 
         .footer {
-            margin-top: 50px;
+            margin-top: 60px;
+            text-align: center;
             font-size: 9px;
-            letter-spacing: 0.2em;
-            opacity: 0.4;
-            text-transform: uppercase;
+            letter-spacing: 3px;
+            opacity: 0.3;
         }
     </style>
 </head>
 <body>
 
-<div class="app-container">
-    <div class="brand-logo">SIGNET</div>
+<div class="app">
+    <div class="header">SIGNET</div>
 
-    <div class="label">Available Assets</div>
-    <div class="main-balance">12,500.50 ₽</div>
-
-    <div class="btn-group">
-        <div class="btn-item">Deposit</div>
-        <div class="btn-item">Withdraw</div>
+    <div class="card-balance">
+        <div class="label">Available Assets</div>
+        <div class="main-amount">12,500.50 ₽</div>
+        <div class="btn-row">
+            <div class="btn">Deposit</div>
+            <div class="btn">Withdraw</div>
+        </div>
     </div>
 
-    <div class="section-title">Market Snapshot</div>
-    
-    <div class="data-row">
-        <span class="ticker">GOLD</span>
-        <span class="price-info">2,150.40 <span class="up">+0.4%</span></span>
-    </div>
-    <div class="data-row">
-        <span class="ticker">BRENT</span>
-        <span class="price-info">82.30 <span class="down">-1.1%</span></span>
-    </div>
-    <div class="data-row">
-        <span class="ticker">BTC</span>
-        <span class="price-info">67,200.15 <span class="up">+2.3%</span></span>
+    <div class="section-name">Market Snapshot</div>
+    <div id="market">
+        <div class="data-line">
+            <span class="ticker">GOLD</span>
+            <span class="num">2,150.40 <span class="up">+0.4%</span></span>
+        </div>
+        <div class="data-line">
+            <span class="ticker">BRENT</span>
+            <span class="num">82.30 <span class="down">-1.1%</span></span>
+        </div>
+        <div class="data-line">
+            <span class="ticker">BTC</span>
+            <span class="num">67,200.15 <span class="up">+2.3%</span></span>
+        </div>
     </div>
 
     <div class="footer">EST. 2026 • TRADERS CLUB</div>
 </div>
 
 <script>
-    // Твой актуальный адрес из терминала
-    const API_LINK = "https://6e36be656d2a85.lhr.life"; 
+    // Твоя активная ссылка из терминала
+    const SERVER_URL = "https://6e36be656d2a85.lhr.life"; 
 
-    async function loadData() {
+    async function sync() {
         try {
-            const r = await fetch(`${API_LINK}/portfolio`);
-            const d = await r.json();
-            // Обновление цифр в реальном времени
-        } catch(e) {}
+            const response = await fetch(`${SERVER_URL}/portfolio`);
+            const data = await response.json();
+            // Здесь обновляем цифры, если сервер отдает данные
+        } catch(e) {
+            console.error("Connection lost");
+        }
     }
-    setInterval(loadData, 30000);
+    setInterval(sync, 30000);
 </script>
 
 </body>
