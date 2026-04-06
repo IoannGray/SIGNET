@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>SIGNET — Private Client</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>SIGNET Heritage</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@200;300&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: #1A1A1A; /* Глубокий графит */
+            background-color: #0D0D0D; /* Глубокий темный фон */
             font-family: 'Inter', sans-serif;
-            color: #C9A03D; /* Благородное золото */
+            color: #C9A03D; /* Золотой акцент */
             display: flex;
             justify-content: center;
             min-height: 100vh;
@@ -21,145 +21,149 @@
         .app {
             width: 100%;
             max-width: 440px;
-            padding: 40px 25px;
+            padding: 40px 20px;
         }
 
-        /* Логотип — классическая антиква */
-        .header {
+        /* Логотип: максимально тонко и широко */
+        .logo {
             text-align: center;
-            font-family: 'Playfair Display', serif;
+            font-family: 'Cormorant Garamond', serif;
             font-size: 32px;
-            letter-spacing: 0.4em;
+            letter-spacing: 0.6em;
             margin-bottom: 50px;
-            font-weight: 400;
+            font-weight: 300;
             text-transform: uppercase;
         }
 
-        /* Блок баланса как на банковском чеке */
-        .card-balance {
-            border: 1px solid rgba(201, 160, 61, 0.25);
+        /* Центральная карточка с тонкой рамкой */
+        .balance-card {
+            border: 1px solid rgba(201, 160, 61, 0.2);
             padding: 50px 20px;
             text-align: center;
-            background: rgba(255, 255, 255, 0.02);
-            margin-bottom: 40px;
+            margin-bottom: 60px;
         }
 
         .label {
             font-size: 10px;
-            letter-spacing: 0.3em;
+            letter-spacing: 0.25em;
             text-transform: uppercase;
-            opacity: 0.6;
-            margin-bottom: 20px;
+            opacity: 0.5;
+            margin-bottom: 25px;
+            font-weight: 300;
         }
 
-        .main-amount {
-            font-family: 'Playfair Display', serif;
-            font-size: 52px;
-            color: #C9A03D;
-            font-weight: 400;
+        .amount {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 56px;
+            font-weight: 300;
+            margin-bottom: 40px;
         }
 
-        /* Кнопки в ряд с разделителем */
-        .btn-row {
-            display: flex;
-            border-top: 1px solid rgba(201, 160, 61, 0.25);
-            margin-top: 40px;
-        }
-
-        .btn {
-            flex: 1;
-            padding: 20px;
+        /* Кнопки ввода/вывода в рамке */
+        .action-box {
+            border: 1px solid rgba(201, 160, 61, 0.4);
+            padding: 18px;
+            display: inline-block;
+            min-width: 240px;
             font-size: 12px;
-            letter-spacing: 0.3em;
-            text-align: center;
+            letter-spacing: 0.4em;
             cursor: pointer;
-            text-transform: uppercase;
             transition: 0.3s;
         }
 
-        .btn:first-child { border-right: 1px solid rgba(201, 160, 61, 0.25); }
-        .btn:hover { background: rgba(201, 160, 61, 0.05); }
+        .action-box:hover { background: rgba(201, 160, 61, 0.05); }
 
-        /* Секции рынка и активности */
-        .section-name {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            font-size: 18px;
-            margin: 40px 0 20px;
-            border-bottom: 1px solid rgba(201, 160, 61, 0.15);
-            padding-bottom: 8px;
+        /* Заголовки разделов */
+        .section-header {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 12px;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            margin: 40px 0 25px;
+            opacity: 0.6;
         }
 
-        .data-line {
+        .row {
             display: flex;
             justify-content: space-between;
-            padding: 15px 0;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 0.5px solid rgba(201, 160, 61, 0.1);
             font-size: 14px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            font-weight: 300;
         }
 
-        .ticker { font-weight: 600; letter-spacing: 1px; }
-        .num { font-family: 'Inter', sans-serif; }
+        .ticker { letter-spacing: 0.15em; }
+        .price { font-family: 'Inter', sans-serif; font-weight: 300; }
         
-        .up { color: #A4C639; }
-        .down { color: #E57373; }
+        .pos { color: #8BC34A; opacity: 0.7; font-size: 11px; margin-left: 8px; }
+        .neg { color: #E57373; opacity: 0.7; font-size: 11px; margin-left: 8px; }
+
+        .time { opacity: 0.4; font-size: 12px; width: 60px; }
+        .activity-text { flex: 1; text-align: right; font-size: 13px; color: #C9A03D; opacity: 0.8; }
 
         .footer {
             margin-top: 60px;
             text-align: center;
             font-size: 9px;
-            letter-spacing: 3px;
+            letter-spacing: 0.3em;
             opacity: 0.3;
+            text-transform: uppercase;
         }
     </style>
 </head>
 <body>
 
 <div class="app">
-    <div class="header">SIGNET</div>
+    <div class="logo">SIGNET</div>
 
-    <div class="card-balance">
-        <div class="label">Available Assets</div>
-        <div class="main-amount">12,500.50 ₽</div>
-        <div class="btn-row">
-            <div class="btn">Deposit</div>
-            <div class="btn">Withdraw</div>
+    <div class="balance-card">
+        <div class="label">Current Balance</div>
+        <div class="amount">12,500.50 ₽</div>
+        <div class="action-box">
+            ВВОД &nbsp; / &nbsp; ВЫВОД
         </div>
     </div>
 
-    <div class="section-name">Market Snapshot</div>
-    <div id="market">
-        <div class="data-line">
-            <span class="ticker">GOLD</span>
-            <span class="num">2,150.40 <span class="up">+0.4%</span></span>
-        </div>
-        <div class="data-line">
-            <span class="ticker">BRENT</span>
-            <span class="num">82.30 <span class="down">-1.1%</span></span>
-        </div>
-        <div class="data-line">
-            <span class="ticker">BTC</span>
-            <span class="num">67,200.15 <span class="up">+2.3%</span></span>
-        </div>
+    <div class="section-header">Portfolio</div>
+    <div class="row">
+        <span class="ticker">GOLD</span>
+        <span><span class="price">2,150.40</span><span class="pos">+0.45%</span></span>
+    </div>
+    <div class="row">
+        <span class="ticker">BRENT</span>
+        <span><span class="price">82.30</span><span class="neg">-1.10%</span></span>
+    </div>
+    <div class="row">
+        <span class="ticker">BTC</span>
+        <span><span class="price">67,200.15</span><span class="pos">+2.30%</span></span>
+    </div>
+
+    <div class="section-header">Latest Activity</div>
+    <div class="row">
+        <span class="time">21:40</span>
+        <span class="activity-text">Профит по BRENT +1.2%</span>
+    </div>
+    <div class="row">
+        <span class="time">18:15</span>
+        <span class="activity-text">SMC: Слом структуры DXY</span>
     </div>
 
     <div class="footer">EST. 2026 • TRADERS CLUB</div>
 </div>
 
 <script>
-    // Твоя активная ссылка из терминала
-    const SERVER_URL = "https://6e36be656d2a85.lhr.life"; 
+    // Твоя ссылка из терминала (обнови, если ngrok перезапущен)
+    const API = "https://6e36be656d2a85.lhr.life"; 
 
-    async function sync() {
+    async function update() {
         try {
-            const response = await fetch(`${SERVER_URL}/portfolio`);
-            const data = await response.json();
-            // Здесь обновляем цифры, если сервер отдает данные
-        } catch(e) {
-            console.error("Connection lost");
-        }
+            const res = await fetch(`${API}/portfolio`);
+            const data = await res.json();
+            // Обновление цифр
+        } catch(e) {}
     }
-    setInterval(sync, 30000);
+    setInterval(update, 30000);
 </script>
 
 </body>
