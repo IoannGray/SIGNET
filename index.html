@@ -2,326 +2,84 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>SIGNET — премиальный кошелёк</title>
-    <!-- EB Garamond: тонкие засечки, банковский стиль -->
-    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Personal Wallet</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --bg-color: #1c1c1e;
+            --card-bg: #2c2c2e;
+            --text-color: #ffffff;
+            --accent-color: #007aff;
         }
-
         body {
-            background-color: #0A0A0A;
-            font-family: 'EB Garamond', 'Times New Roman', serif;
-            font-weight: 400;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
             padding: 20px;
-        }
-
-        .app {
-            max-width: 480px;
-            width: 100%;
-            background: #111111;
-            border-radius: 28px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(212, 175, 55, 0.25);
-            padding: 28px 20px 36px;
-        }
-
-        /* Заголовок */
-        .header {
             display: flex;
-            align-items: baseline;
-            justify-content: space-between;
-            margin-bottom: 28px;
-            border-bottom: 0.5px solid rgba(212, 175, 55, 0.3);
-            padding-bottom: 12px;
-        }
-        .logo-area {
-            display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 8px;
         }
-        .griffin-icon svg {
-            width: 30px;
-            height: 30px;
-            opacity: 0.9;
-        }
-        .app-name {
-            font-size: 22px;
-            font-weight: 500;
-            letter-spacing: 5px;
-            color: #D4AF37;
-            text-transform: uppercase;
-            font-family: 'EB Garamond', serif;
-        }
-        .close-btn {
-            color: #D4AF37;
-            font-size: 20px;
-            cursor: pointer;
-            opacity: 0.6;
-            font-weight: 300;
-        }
-
-        /* Баланс */
-        .balance-section {
+        .user-info { margin-bottom: 20px; font-size: 18px; font-weight: bold; }
+        .balance-card {
+            background-color: var(--card-bg);
+            width: 100%;
+            border-radius: 20px;
+            padding: 30px 20px;
             text-align: center;
-            margin-bottom: 28px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
         }
-        .balance-label {
-            font-size: 10px;
-            letter-spacing: 3px;
-            color: rgba(212, 175, 55, 0.6);
-            margin-bottom: 6px;
-            font-weight: 400;
-            text-transform: uppercase;
-        }
-        .balance-amount {
-            font-size: 44px;
-            font-weight: 500;
-            color: #D4AF37;
-            letter-spacing: 2px;
-            font-family: 'EB Garamond', serif;
-        }
-        .balance-currency {
-            font-size: 18px;
-            font-weight: 400;
-            margin-left: 6px;
-        }
-
-        /* Кнопки ввод/вывод */
-        .action-row {
-            display: flex;
-            justify-content: center;
-            gap: 28px;
-            margin-bottom: 36px;
-        }
-        .action-btn {
-            background: transparent;
-            border: 1px solid rgba(212, 175, 55, 0.7);
-            padding: 8px 28px;
-            font-family: 'EB Garamond', serif;
-            font-size: 15px;
-            font-weight: 500;
-            letter-spacing: 3px;
-            color: #D4AF37;
-            text-transform: uppercase;
-            border-radius: 40px;
+        .balance-label { font-size: 14px; color: #8e8e93; text-transform: uppercase; margin-bottom: 10px; }
+        .balance-amount { font-size: 36px; font-weight: 800; }
+        .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; }
+        .btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
-            transition: 0.2s;
-            background: rgba(0,0,0,0.3);
-            backdrop-filter: blur(2px);
         }
-        .action-btn:hover {
-            background: rgba(212,175,55,0.1);
-            border-color: #E5C158;
-        }
-
-        /* Портфолио */
-        .portfolio-title {
-            font-size: 12px;
-            letter-spacing: 4px;
-            color: #D4AF37;
-            margin-bottom: 14px;
-            border-left: 1px solid #D4AF37;
-            padding-left: 10px;
-            font-weight: 500;
-            text-transform: uppercase;
-        }
-        .assets-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            margin-bottom: 34px;
-        }
-        .asset-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            border-bottom: 0.5px dashed rgba(212,175,55,0.2);
-            padding-bottom: 8px;
-        }
-        .asset-name {
-            font-weight: 500;
-            color: #D4AF37;
-            font-size: 15px;
-            letter-spacing: 1px;
-        }
-        .asset-value {
-            font-weight: 500;
-            color: #E8D18C;
-            font-size: 15px;
-            letter-spacing: 0.5px;
-        }
-        .asset-change {
-            font-size: 11px;
-            margin-left: 10px;
-            font-weight: 400;
-        }
-        .positive {
-            color: #b3d9b0;
-        }
-        .negative {
-            color: #e0afa0;
-        }
-
-        /* Лента активности */
-        .activity-title {
-            font-size: 12px;
-            letter-spacing: 4px;
-            color: #D4AF37;
-            margin-bottom: 14px;
-            border-left: 1px solid #D4AF37;
-            padding-left: 10px;
-            font-weight: 500;
-            text-transform: uppercase;
-        }
-        .activity-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        .activity-item {
-            display: flex;
-            justify-content: space-between;
-            font-size: 11px;
-            color: #bbaa77;
-            border-bottom: 0.5px dotted rgba(212,175,55,0.15);
-            padding-bottom: 7px;
-            font-weight: 400;
-            letter-spacing: 0.3px;
-        }
-        .activity-time {
-            font-weight: 500;
-            letter-spacing: 0.8px;
-        }
-        .activity-desc {
-            text-align: right;
-            max-width: 70%;
-            font-style: normal;
-        }
-
-        .footer-note {
-            margin-top: 32px;
-            text-align: center;
-            font-size: 7px;
-            letter-spacing: 2px;
-            color: rgba(212,175,55,0.25);
-            text-transform: uppercase;
-        }
+        .btn-secondary { background-color: #3a3a3c; }
     </style>
 </head>
 <body>
-<div class="app">
-    <div class="header">
-        <div class="logo-area">
-            <div class="griffin-icon">
-                <svg viewBox="0 0 40 40" width="30" height="30">
-                    <path d="M20 5 L28 15 L24 25 L32 30 L28 38 L20 34 L12 38 L8 30 L16 25 L12 15 L20 5Z" fill="#C9A03D" stroke="#D4AF37" stroke-width="0.6"/>
-                    <circle cx="20" cy="18" r="3" fill="#111"/>
-                </svg>
-            </div>
-            <div class="app-name">SIGNET</div>
-        </div>
-        <div class="close-btn">✕</div>
+
+    <div class="user-info" id="user-name">Загрузка...</div>
+
+    <div class="balance-card">
+        <div class="balance-label">Мой Баланс</div>
+        <div class="balance-amount" id="balance">0.00 ₽</div>
     </div>
 
-    <div class="balance-section">
-        <div class="balance-label">CURRENT BALANCE</div>
-        <div class="balance-amount">12,500.50<span class="balance-currency">₽</span></div>
+    <div class="actions">
+        <button class="btn" onclick="topUp()">Пополнить</button>
+        <button class="btn btn-secondary" onclick="sendMoney()">Перевести</button>
     </div>
 
-    <div class="action-row">
-        <button class="action-btn" id="depositBtn">ВВОД</button>
-        <button class="action-btn" id="withdrawBtn">ВЫВОД</button>
-    </div>
+    <script>
+        // Инициализация Telegram Web App
+        const tg = window.Telegram.WebApp;
+        tg.expand(); // Разворачиваем на все окно
 
-    <div class="portfolio-title">PORTFOLIO</div>
-    <div class="assets-grid" id="assetsGrid">
-        <div class="asset-item"><span class="asset-name">GOLD</span><span><span class="asset-value">—</span><span class="asset-change"></span></span></div>
-        <div class="asset-item"><span class="asset-name">BRENT</span><span><span class="asset-value">—</span><span class="asset-change"></span></span></div>
-        <div class="asset-item"><span class="asset-name">BTC</span><span><span class="asset-value">—</span><span class="asset-change"></span></span></div>
-        <div class="asset-item"><span class="asset-name">DXY</span><span><span class="asset-value">—</span><span class="asset-change"></span></span></div>
-    </div>
+        // Берем данные пользователя из Telegram
+        const user = tg.initDataUnsafe?.user;
+        if (user) {
+            document.getElementById('user-name').innerText = `Привет, ${user.first_name}!`;
+        }
 
-    <div class="activity-title">LATEST ACTIVITY</div>
-    <div class="activity-list" id="activityList">
-        <div class="activity-item"><span class="activity-time">--:--</span><span class="activity-desc">Загрузка...</span></div>
-    </div>
-    <div class="footer-note">SIGNET • ЗАЩИЩЕННЫЙ КОШЕЛЁК</div>
-</div>
+        function topUp() {
+            tg.showAlert("Функция пополнения через СБП будет доступна скоро!");
+        }
 
-<script>
-    const API_BASE = "https://e22f7ef12e4526.lhr.life";
-    const TELEGRAM_ID = "demo_user_123";
-
-    async function loadPortfolio() {
-        try {
-            const resp = await fetch(`${API_BASE}/portfolio`);
-            if (!resp.ok) throw new Error();
-            const data = await resp.json();
-            const assets = ["GOLD", "BRENT", "BTC", "DXY"];
-            const container = document.getElementById("assetsGrid");
-            const items = container.querySelectorAll(".asset-item");
-            for (let i = 0; i < assets.length; i++) {
-                const sym = assets[i];
-                const info = data[sym];
-                if (info) {
-                    const price = info.price.toFixed(2);
-                    const change = info.change_percent.toFixed(2);
-                    const changeClass = change >= 0 ? "positive" : "negative";
-                    const sign = change >= 0 ? "+" : "";
-                    items[i].querySelector(".asset-value").innerHTML = `${price} ${sym === "DXY" ? "" : "$"}`;
-                    items[i].querySelector(".asset-change").innerHTML = `<span class="${changeClass}">${sign}${change}%</span>`;
-                }
-            }
-        } catch(e) { console.warn(e); }
-    }
-
-    async function loadActivity() {
-        try {
-            const resp = await fetch(`${API_BASE}/activity/${TELEGRAM_ID}`);
-            if (!resp.ok) throw new Error();
-            const activities = await resp.json();
-            const container = document.getElementById("activityList");
-            if (activities.length === 0) {
-                container.innerHTML = '<div class="activity-item"><span class="activity-time">—</span><span class="activity-desc">Нет активности</span></div>';
-                return;
-            }
-            container.innerHTML = activities.map(act => `
-                <div class="activity-item">
-                    <span class="activity-time">${act.time}</span>
-                    <span class="activity-desc">${act.description}</span>
-                </div>
-            `).join('');
-        } catch(e) { console.warn(e); }
-    }
-
-    async function loadBalance() {
-        try {
-            const resp = await fetch(`${API_BASE}/balance/${TELEGRAM_ID}`);
-            if (resp.ok) {
-                const data = await resp.json();
-                const balanceElem = document.querySelector(".balance-amount");
-                if (data.balance !== undefined) {
-                    balanceElem.innerHTML = `${data.balance.toLocaleString()}<span class="balance-currency">₽</span>`;
-                }
-            }
-        } catch(e) {}
-    }
-
-    document.getElementById("depositBtn").onclick = () => alert("Пополнение через защищённый канал");
-    document.getElementById("withdrawBtn").onclick = () => alert("Вывод средств");
-
-    loadPortfolio();
-    loadActivity();
-    loadBalance();
-    setInterval(loadPortfolio, 60000);
-</script>
+        function sendMoney() {
+            tg.showConfirm("Вы уверены, что хотите перейти к переводу?");
+        }
+    </script>
 </body>
 </html>
