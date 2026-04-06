@@ -153,37 +153,41 @@
 </div>
 
 <script>
-    // Твоя ссылка из терминала (обнови, если ngrok перезапущен)
-    const API_URL = "https://6e36be656d2a85.lhr.life"; // Твой адрес из терминала
+    // Используем твою ссылку из нижнего окна терминала
+    const API_URL = "https://6e36be656d2a85.lhr.life"; 
 
-    async function refreshData() {
+    async function updateMarketData() {
         try {
             const response = await fetch(`${API_URL}/portfolio`);
             const data = await response.json();
             
-            const container = document.getElementById('market-list');
-            container.innerHTML = ''; // Очищаем старые данные
-
+            // Находим контейнер, где лежат строки с активами
+            const container = document.querySelector('.balance-card').nextElementSibling.nextElementSibling;
+            
+            // Очищаем и рисуем новые данные с живыми ценами
+            let html = '';
             data.assets.forEach(asset => {
-                const isPos = asset.change.includes('+');
-                container.innerHTML += `
+                const isPositive = asset.change.includes('+');
+                html += `
                     <div class="row">
                         <span class="ticker">${asset.ticker}</span>
                         <span>
-                            <span class="price">${asset.price.toLocaleString()}</span>
-                            <span class="${isPos ? 'pos' : 'neg'}">${asset.change}</span>
+                            <span class="price">${asset.price.toLocaleString(undefined, {minimumFractionDigits: 2})}</span>
+                            <span class="${isPositive ? 'pos' : 'neg'}">${asset.change}</span>
                         </span>
                     </div>
                 `;
             });
+            container.innerHTML = html;
+
         } catch (e) {
-            console.log("Ожидание сервера...");
+            console.error("Connection to server failed. Check if terminal is open.");
         }
     }
 
-    // Запускаем обновление сразу и потом каждые 5 секунд
-    refreshData();
-    setInterval(refreshData, 5000);
+    // Обновляем данные каждые 3 секунды для эффекта "живого" рынка
+    updateMarketData();
+    setInterval(updateMarketData, 3000);
 </script>
 
 </body>
