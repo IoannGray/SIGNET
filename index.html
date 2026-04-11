@@ -59,6 +59,25 @@
       border-bottom: 1px dashed #c6a43f30;
       padding-bottom: 16px;
     }
+
+    /* Логотип с грифоном */
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+    .griffin-logo {
+      max-width: 56px;
+      height: auto;
+      opacity: 0.85;
+      transition: opacity 0.2s ease;
+      /* Раскомментируй, если хочешь принудительно сделать грифон золотым (монохром) */
+      /* filter: brightness(0) saturate(100%) invert(73%) sepia(47%) saturate(478%) hue-rotate(2deg) brightness(94%) contrast(88%); */
+    }
+    .griffin-logo:hover {
+      opacity: 1;
+    }
+
     .bank-name {
       font-family: 'Playfair Display', serif;
       font-weight: 400;
@@ -116,7 +135,6 @@
       letter-spacing: 0.3px;
     }
 
-    /* Блок кнопок ВВОД / ВЫВОД */
     .action-buttons {
       display: flex;
       gap: 16px;
@@ -228,12 +246,17 @@
       .banknote { padding: 24px 20px; }
       .balance-amount { font-size: 38px; }
       .btn-action { font-size: 12px; padding: 10px 0; }
+      .griffin-logo { max-width: 44px; }
     }
   </style>
 </head>
 <body>
 <div class="banknote watermark">
   <div class="receipt-header">
+    <!-- Грифон над названием -->
+    <div class="logo-container">
+      <img src="griffin.png" alt="griffin crest" class="griffin-logo">
+    </div>
     <div class="bank-name">
       <span class="column-icon"></span> SIGNET <span class="column-icon"></span>
     </div>
@@ -246,7 +269,6 @@
     <div class="balance-equiv" id="equivalent">≈ 0.184 BTC / 3.42 ETH</div>
   </div>
 
-  <!-- НОВЫЙ БЛОК: кнопки ВВОД / ВЫВОД -->
   <div class="action-buttons">
     <button class="btn-action" id="depositBtn">
       <span class="arrow-icon">↑</span> ВВОД
@@ -256,7 +278,7 @@
     </button>
   </div>
 
-  <div class="assets-table" id="assetsContainer">
+  <div class="assets-table">
     <div class="asset-row">
       <span class="asset-name">Bitcoin</span>
       <span class="asset-amount">0.18420000 <span class="asset-ticker">BTC</span></span>
@@ -287,10 +309,8 @@
 </div>
 
 <script>
-  // Обработчики кнопок (заглушки, позже добавим логику)
   document.getElementById('depositBtn').addEventListener('click', () => {
     alert('Пополнение баланса. Здесь будет форма ввода суммы и выбор валюты.');
-    // В будущем: открыть модальное окно с адресом для пополнения или выбором платёжной системы.
   });
   document.getElementById('withdrawBtn').addEventListener('click', () => {
     alert('Вывод средств. Здесь будет форма для вывода на карту или крипто-адрес.');
