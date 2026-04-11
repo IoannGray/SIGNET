@@ -1,192 +1,322 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>SIGNET Heritage</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@200;300&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>SIGNET Wallet</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        body {
-            background-color: #0D0D0D; /* Глубокий темный фон */
-            font-family: 'Inter', sans-serif;
-            color: #C9A03D; /* Золотой акцент */
-            display: flex;
-            justify-content: center;
-            min-height: 100vh;
-            -webkit-font-smoothing: antialiased;
-        }
+    body {
+      background: #0c0c0c;
+      background-image: radial-gradient(rgba(198, 164, 63, 0.03) 1px, transparent 1px);
+      background-size: 32px 32px;
+      font-family: 'SF Mono', 'Menlo', 'Courier New', monospace;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
 
-        .app {
-            width: 100%;
-            max-width: 440px;
-            padding: 40px 20px;
-        }
+    @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500&family=Playfair+Display:wght@300;400;500;600&display=swap');
 
-        /* Логотип: максимально тонко и широко */
-        .logo {
-            text-align: center;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 32px;
-            letter-spacing: 0.6em;
-            margin-bottom: 50px;
-            font-weight: 300;
-            text-transform: uppercase;
-        }
+    .banknote {
+      max-width: 440px;
+      width: 100%;
+      background: #121212;
+      background: linear-gradient(145deg, #121212 0%, #0e0e0e 100%);
+      border-radius: 28px;
+      padding: 32px 28px;
+      box-shadow: 0 25px 40px -12px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.02), 0 0 0 1px rgba(198,164,63,0.2);
+      transition: all 0.2s ease;
+    }
 
-        /* Центральная карточка с тонкой рамкой */
-        .balance-card {
-            border: 1px solid rgba(201, 160, 61, 0.2);
-            padding: 50px 20px;
-            text-align: center;
-            margin-bottom: 60px;
-        }
+    .watermark {
+      position: relative;
+      z-index: 1;
+    }
+    .watermark::after {
+      content: "SIGNET";
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: #c6a43f0d;
+      font-family: monospace;
+      pointer-events: none;
+      font-weight: 300;
+    }
 
-        .label {
-            font-size: 10px;
-            letter-spacing: 0.25em;
-            text-transform: uppercase;
-            opacity: 0.5;
-            margin-bottom: 25px;
-            font-weight: 300;
-        }
+    .receipt-header {
+      text-align: center;
+      margin-bottom: 28px;
+      border-bottom: 1px dashed #c6a43f30;
+      padding-bottom: 16px;
+    }
+    .bank-name {
+      font-family: 'Playfair Display', serif;
+      font-weight: 400;
+      font-size: 22px;
+      letter-spacing: 6px;
+      color: #dbbc6c;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .bank-sub {
+      font-family: monospace;
+      font-size: 9px;
+      letter-spacing: 2px;
+      color: #8e793e;
+      text-transform: uppercase;
+    }
+    .column-icon {
+      display: inline-block;
+      margin: 0 6px;
+      font-family: serif;
+      font-size: 14px;
+      color: #c6a43f;
+      letter-spacing: 2px;
+    }
+    .column-icon::before {
+      content: "‖";
+      font-weight: 300;
+    }
 
-        .amount {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 56px;
-            font-weight: 300;
-            margin-bottom: 40px;
-        }
+    .balance-section {
+      text-align: center;
+      margin: 24px 0 20px 0;
+    }
+    .balance-label {
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: #8e793e;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .balance-amount {
+      font-family: 'Playfair Display', serif;
+      font-weight: 300;
+      font-size: 48px;
+      color: #e7cf97;
+      letter-spacing: 1px;
+      text-shadow: 0 0 6px rgba(198,164,63,0.15);
+      line-height: 1.1;
+    }
+    .balance-equiv {
+      font-family: monospace;
+      font-size: 12px;
+      color: #5e5e64;
+      margin-top: 8px;
+      letter-spacing: 0.3px;
+    }
 
-        /* Кнопки ввода/вывода в рамке */
-        .action-box {
-            border: 1px solid rgba(201, 160, 61, 0.4);
-            padding: 18px;
-            display: inline-block;
-            min-width: 240px;
-            font-size: 12px;
-            letter-spacing: 0.4em;
-            cursor: pointer;
-            transition: 0.3s;
-        }
+    /* Блок кнопок ВВОД / ВЫВОД */
+    .action-buttons {
+      display: flex;
+      gap: 16px;
+      margin: 24px 0 20px 0;
+      justify-content: center;
+    }
+    .btn-action {
+      flex: 1;
+      background: rgba(18, 18, 18, 0.8);
+      border: 1px solid rgba(198, 164, 63, 0.4);
+      border-radius: 48px;
+      padding: 12px 0;
+      font-family: monospace;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #dbbc6c;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-action:hover {
+      background: rgba(198, 164, 63, 0.1);
+      border-color: #c6a43f;
+      box-shadow: 0 0 8px rgba(198, 164, 63, 0.3);
+      color: #f3e2b0;
+    }
+    .btn-action:active {
+      transform: scale(0.97);
+    }
+    .arrow-icon {
+      font-size: 18px;
+      font-weight: 400;
+    }
 
-        .action-box:hover { background: rgba(201, 160, 61, 0.05); }
+    .assets-table {
+      margin: 20px 0 20px 0;
+    }
+    .asset-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 12px 0;
+      border-bottom: 1px solid #1f1f22;
+      font-size: 14px;
+    }
+    .asset-name {
+      font-family: monospace;
+      font-weight: 400;
+      color: #b9b9c0;
+      letter-spacing: -0.2px;
+    }
+    .asset-amount {
+      font-family: monospace;
+      font-weight: 500;
+      color: #ececec;
+    }
+    .asset-ticker {
+      font-size: 10px;
+      color: #c6a43f;
+      margin-left: 6px;
+      letter-spacing: 0.5px;
+    }
 
-        /* Заголовки разделов */
-        .section-header {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 12px;
-            letter-spacing: 0.4em;
-            text-transform: uppercase;
-            margin: 40px 0 25px;
-            opacity: 0.6;
-        }
+    .limit-row {
+      display: flex;
+      justify-content: space-between;
+      margin: 16px 0 12px 0;
+      padding-top: 8px;
+      font-size: 12px;
+      color: #a3a3aa;
+      border-top: 1px solid #c6a43f20;
+    }
 
-        .row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px 0;
-            border-bottom: 0.5px solid rgba(201, 160, 61, 0.1);
-            font-size: 14px;
-            font-weight: 300;
-        }
+    .receipt-footer {
+      margin-top: 24px;
+      text-align: right;
+      font-size: 9px;
+      font-family: monospace;
+      color: #4a4a50;
+      border-top: 1px dashed #c6a43f20;
+      padding-top: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .signature {
+      font-family: 'Playfair Display', serif;
+      font-size: 10px;
+      color: #c6a43f;
+      font-style: italic;
+    }
 
-        .ticker { letter-spacing: 0.15em; }
-        .price { font-family: 'Inter', sans-serif; font-weight: 300; }
-        
-        .pos { color: #8BC34A; opacity: 0.7; font-size: 11px; margin-left: 8px; }
-        .neg { color: #E57373; opacity: 0.7; font-size: 11px; margin-left: 8px; }
+    @keyframes subtleFlash {
+      0% { text-shadow: 0 0 0 #c6a43f; }
+      50% { text-shadow: 0 0 6px #c6a43f80; }
+      100% { text-shadow: 0 0 0 #c6a43f; }
+    }
+    .flash {
+      animation: subtleFlash 0.4s ease;
+    }
 
-        .time { opacity: 0.4; font-size: 12px; width: 60px; }
-        .activity-text { flex: 1; text-align: right; font-size: 13px; color: #C9A03D; opacity: 0.8; }
-
-        .footer {
-            margin-top: 60px;
-            text-align: center;
-            font-size: 9px;
-            letter-spacing: 0.3em;
-            opacity: 0.3;
-            text-transform: uppercase;
-        }
-    </style>
+    @media (max-width: 460px) {
+      .banknote { padding: 24px 20px; }
+      .balance-amount { font-size: 38px; }
+      .btn-action { font-size: 12px; padding: 10px 0; }
+    }
+  </style>
 </head>
 <body>
+<div class="banknote watermark">
+  <div class="receipt-header">
+    <div class="bank-name">
+      <span class="column-icon"></span> SIGNET <span class="column-icon"></span>
+    </div>
+    <div class="bank-sub">MULTI‑CURRENCY ACCOUNT</div>
+  </div>
 
-<div class="app">
-    <div class="logo">SIGNET</div>
+  <div class="balance-section">
+    <div class="balance-label">TOTAL BALANCE (USD)</div>
+    <div class="balance-amount" id="totalBalance">$ 12,450.80</div>
+    <div class="balance-equiv" id="equivalent">≈ 0.184 BTC / 3.42 ETH</div>
+  </div>
 
-    <div class="balance-card">
-        <div class="label">Current Balance</div>
-        <div class="amount">12,500.50 ₽</div>
-        <div class="action-box">
-            ВВОД &nbsp; / &nbsp; ВЫВОД
-        </div>
-    </div>
+  <!-- НОВЫЙ БЛОК: кнопки ВВОД / ВЫВОД -->
+  <div class="action-buttons">
+    <button class="btn-action" id="depositBtn">
+      <span class="arrow-icon">↑</span> ВВОД
+    </button>
+    <button class="btn-action" id="withdrawBtn">
+      <span class="arrow-icon">↓</span> ВЫВОД
+    </button>
+  </div>
 
-    <div class="section-header">Portfolio</div>
-    
-    <div id="market-list">
-        <div class="row">
-        <span class="ticker">GOLD</span>
-        <span><span class="price">2,150.40</span><span class="pos">+0.45%</span></span>
+  <div class="assets-table" id="assetsContainer">
+    <div class="asset-row">
+      <span class="asset-name">Bitcoin</span>
+      <span class="asset-amount">0.18420000 <span class="asset-ticker">BTC</span></span>
     </div>
-    <div class="row">
-        <span class="ticker">BRENT</span>
-        <span><span class="price">82.30</span><span class="neg">-1.10%</span></span>
+    <div class="asset-row">
+      <span class="asset-name">Ethereum</span>
+      <span class="asset-amount">3.42100000 <span class="asset-ticker">ETH</span></span>
     </div>
-    <div class="row">
-        <span class="ticker">BTC</span>
-        <span><span class="price">67,200.15</span><span class="pos">+2.30%</span></span>
+    <div class="asset-row">
+      <span class="asset-name">Tether (TRC20)</span>
+      <span class="asset-amount">2,450.00 <span class="asset-ticker">USDT</span></span>
     </div>
+    <div class="asset-row">
+      <span class="asset-name">US Dollar</span>
+      <span class="asset-amount">5,200.00 <span class="asset-ticker">USD</span></span>
+    </div>
+  </div>
 
-    <div class="section-header">Latest Activity</div>
-    <div class="row">
-        <span class="time">21:40</span>
-        <span class="activity-text">Профит по BRENT +1.2%</span>
-    </div>
-    <div class="row">
-        <span class="time">18:15</span>
-        <span class="activity-text">SMC: Слом структуры DXY</span>
-    </div>
+  <div class="limit-row">
+    <span>💳 DAILY CARD LIMIT</span>
+    <span style="color:#c6a43f;">$ 4,250 remaining</span>
+  </div>
 
-    <div class="footer">EST. 2026 • TRADERS CLUB</div>
+  <div class="receipt-footer">
+    <span class="signature">authorized signatory</span>
+    <span id="timestamp">SYNC: JUST NOW</span>
+  </div>
 </div>
 
 <script>
-    // 1. УБЕДИСЬ ЧТО ЭТА ССЫЛКА СОВПАДАЕТ С ТВОИМ ТЕРМИНАЛОМ (НИЖНЕЕ ОКНО)
-    const API_URL = "https://a4a2c7ef3d8ffa.lhr.life"; 
+  // Обработчики кнопок (заглушки, позже добавим логику)
+  document.getElementById('depositBtn').addEventListener('click', () => {
+    alert('Пополнение баланса. Здесь будет форма ввода суммы и выбор валюты.');
+    // В будущем: открыть модальное окно с адресом для пополнения или выбором платёжной системы.
+  });
+  document.getElementById('withdrawBtn').addEventListener('click', () => {
+    alert('Вывод средств. Здесь будет форма для вывода на карту или крипто-адрес.');
+  });
 
-    async function updateMarket() {
-        try {
-            const response = await fetch(API_URL + "/portfolio");
-            const data = await response.json();
-            
-            const list = document.getElementById('market-list');
-            if (!list) return; // Если не нашел ID, ничего не делаем
-
-            let newHtml = "";
-            data.assets.forEach(asset => {
-                const isPos = asset.change.includes('+');
-                newHtml += `
-                    <div class="row">
-                        <span class="ticker">${asset.ticker}</span>
-                        <span>
-                            <span class="price">${asset.price.toFixed(2)}</span>
-                            <span class="${isPos ? 'pos' : 'neg'}">${asset.change}</span>
-                        </span>
-                    </div>
-                `;
-            });
-            list.innerHTML = newHtml;
-            console.log("Данные обновлены");
-        } catch (error) {
-            console.error("Ошибка связи с сервером:", error);
-        }
+  function refreshData() {
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute:'2-digit', second:'2-digit' });
+    const timestampSpan = document.getElementById('timestamp');
+    if (timestampSpan) {
+      timestampSpan.textContent = `SYNC: ${timeStr}`;
+      timestampSpan.classList.add('flash');
+      setTimeout(() => timestampSpan.classList.remove('flash'), 400);
     }
 
-    // Обновляем раз в 3 секунды
-    setInterval(updateMarket, 3000);
-    updateMarket(); // И один раз при запуске
+    const totalSpan = document.getElementById('totalBalance');
+    const currentTotal = parseFloat(totalSpan.innerText.replace('$ ', '').replace(',', ''));
+    const delta = (Math.random() - 0.5) * 12;
+    const newTotal = (currentTotal + delta).toFixed(2);
+    totalSpan.innerText = `$ ${newTotal.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`;
+    totalSpan.classList.add('flash');
+    setTimeout(() => totalSpan.classList.remove('flash'), 400);
+  }
+
+  setInterval(refreshData, 15000);
+  refreshData();
 </script>
+</body>
+</html>
