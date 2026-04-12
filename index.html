@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>SIGNET Wallet</title>
   <style>
+    /* ... весь ваш старый CSS без изменений ... */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-
     body {
       background: #0c0c0c;
       background-image: radial-gradient(rgba(198, 164, 63, 0.03) 1px, transparent 1px);
@@ -22,9 +22,7 @@
       min-height: 100vh;
       padding: 20px;
     }
-
     @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500&family=Playfair+Display:wght@300;400;500;600&display=swap');
-
     .banknote {
       max-width: 440px;
       width: 100%;
@@ -35,7 +33,6 @@
       box-shadow: 0 25px 40px -12px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.02), 0 0 0 1px rgba(198,164,63,0.2);
       transition: all 0.2s ease;
     }
-
     .watermark {
       position: relative;
       z-index: 1;
@@ -52,15 +49,12 @@
       pointer-events: none;
       font-weight: 300;
     }
-
     .receipt-header {
       text-align: center;
       margin-bottom: 28px;
       border-bottom: 1px dashed #c6a43f30;
       padding-bottom: 16px;
     }
-
-    /* Логотип с грифоном */
     .logo-container {
       display: flex;
       justify-content: center;
@@ -71,13 +65,10 @@
       height: auto;
       opacity: 0.85;
       transition: opacity 0.2s ease;
-      /* <img src="griffin_logo.png" alt="Traders Club Logo" style="width: 200px; height: auto;"> */
-      /* filter: brightness(0) saturate(100%) invert(73%) sepia(47%) saturate(478%) hue-rotate(2deg) brightness(94%) contrast(88%); */
     }
     .griffin-logo:hover {
       opacity: 1;
     }
-
     .bank-name {
       font-family: 'Playfair Display', serif;
       font-weight: 400;
@@ -106,7 +97,6 @@
       content: "‖";
       font-weight: 300;
     }
-
     .balance-section {
       text-align: center;
       margin: 24px 0 20px 0;
@@ -119,14 +109,14 @@
       margin-bottom: 8px;
     }
     .balance-amount {
-  font-family: 'Playfair Display', serif;
-  font-weight: 300;
-  font-size: 48px;
-  color: #dbbc6c;          /* тот же цвет, что у текста на кнопках */
-  text-shadow: 0 0 6px rgba(219, 188, 108, 0.2);
-  letter-spacing: 1px;
-  line-height: 1.1;
-}
+      font-family: 'Playfair Display', serif;
+      font-weight: 300;
+      font-size: 48px;
+      color: #dbbc6c;
+      text-shadow: 0 0 6px rgba(219, 188, 108, 0.2);
+      letter-spacing: 1px;
+      line-height: 1.1;
+    }
     .balance-equiv {
       font-family: monospace;
       font-size: 12px;
@@ -134,7 +124,6 @@
       margin-top: 8px;
       letter-spacing: 0.3px;
     }
-
     .action-buttons {
       display: flex;
       gap: 16px;
@@ -174,7 +163,6 @@
       font-size: 18px;
       font-weight: 400;
     }
-
     .assets-table {
       margin: 20px 0 20px 0;
     }
@@ -203,7 +191,6 @@
       margin-left: 6px;
       letter-spacing: 0.5px;
     }
-
     .limit-row {
       display: flex;
       justify-content: space-between;
@@ -213,7 +200,6 @@
       color: #a3a3aa;
       border-top: 1px solid #c6a43f20;
     }
-
     .receipt-footer {
       margin-top: 24px;
       text-align: right;
@@ -232,7 +218,6 @@
       color: #c6a43f;
       font-style: italic;
     }
-
     @keyframes subtleFlash {
       0% { text-shadow: 0 0 0 #c6a43f; }
       50% { text-shadow: 0 0 6px #c6a43f80; }
@@ -241,7 +226,6 @@
     .flash {
       animation: subtleFlash 0.4s ease;
     }
-
     @media (max-width: 460px) {
       .banknote { padding: 24px 20px; }
       .balance-amount { font-size: 38px; }
@@ -253,7 +237,6 @@
 <body>
 <div class="banknote watermark">
   <div class="receipt-header">
-    <!-- Грифон над названием -->
     <div class="logo-container">
       <img src="griffin.png" alt="griffin crest" class="griffin-logo">
     </div>
@@ -262,13 +245,11 @@
     </div>
     <div class="bank-sub">MULTI‑CURRENCY ACCOUNT</div>
   </div>
-
   <div class="balance-section">
     <div class="balance-label">TOTAL BALANCE (USD)</div>
     <div class="balance-amount" id="totalBalance">$ 12,450.80</div>
     <div class="balance-equiv" id="equivalent">≈ 0.184 BTC / 3.42 ETH</div>
   </div>
-
   <div class="action-buttons">
     <button class="btn-action" id="depositBtn">
       <span class="arrow-icon">↑</span> ВВОД
@@ -277,7 +258,6 @@
       <span class="arrow-icon">↓</span> ВЫВОД
     </button>
   </div>
-
   <div class="assets-table">
     <div class="asset-row">
       <span class="asset-name">Bitcoin</span>
@@ -296,25 +276,27 @@
       <span class="asset-amount">5,200.00 <span class="asset-ticker">USD</span></span>
     </div>
   </div>
-
   <div class="limit-row">
     <span>💳 DAILY CARD LIMIT</span>
     <span style="color:#c6a43f;">$ 4,250 remaining</span>
   </div>
-
   <div class="receipt-footer">
     <span class="signature">authorized signatory</span>
     <span id="timestamp">SYNC: JUST NOW</span>
   </div>
 </div>
 
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script>
-  document.getElementById('depositBtn').addEventListener('click', () => {
-    alert('Пополнение баланса. Здесь будет форма ввода суммы и выбор валюты.');
-  });
-  document.getElementById('withdrawBtn').addEventListener('click', () => {
-    alert('Вывод средств. Здесь будет форма для вывода на карту или крипто-адрес.');
-  });
+  const tg = window.Telegram.WebApp;
+  tg.expand();
+  tg.ready();
+
+  function applyTelegramTheme() {
+    if (tg.themeParams.bg_color) document.body.style.backgroundColor = tg.themeParams.bg_color;
+  }
+  applyTelegramTheme();
+  tg.onEvent('themeChanged', applyTelegramTheme);
 
   function refreshData() {
     const now = new Date();
@@ -325,7 +307,6 @@
       timestampSpan.classList.add('flash');
       setTimeout(() => timestampSpan.classList.remove('flash'), 400);
     }
-
     const totalSpan = document.getElementById('totalBalance');
     const currentTotal = parseFloat(totalSpan.innerText.replace('$ ', '').replace(',', ''));
     const delta = (Math.random() - 0.5) * 12;
@@ -334,9 +315,28 @@
     totalSpan.classList.add('flash');
     setTimeout(() => totalSpan.classList.remove('flash'), 400);
   }
-
   setInterval(refreshData, 15000);
   refreshData();
+
+  document.getElementById('depositBtn').addEventListener('click', () => {
+    let amount = prompt("💰 Введите сумму для ПОПОЛНЕНИЯ в USD:");
+    if (amount && !isNaN(amount) && parseFloat(amount) > 0) {
+      tg.sendData(JSON.stringify({ action: 'deposit', amount: parseFloat(amount) }));
+      tg.close();
+    } else if (amount) {
+      alert("❌ Введите корректную сумму.");
+    }
+  });
+
+  document.getElementById('withdrawBtn').addEventListener('click', () => {
+    let amount = prompt("💸 Введите сумму для ВЫВОДА в USD:");
+    if (amount && !isNaN(amount) && parseFloat(amount) > 0) {
+      tg.sendData(JSON.stringify({ action: 'withdraw', amount: parseFloat(amount) }));
+      tg.close();
+    } else if (amount) {
+      alert("❌ Введите корректную сумму.");
+    }
+  });
 </script>
 </body>
 </html>
